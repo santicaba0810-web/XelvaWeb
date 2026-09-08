@@ -310,9 +310,9 @@
     inset:0;
     display:flex;
     align-items:center;
-    flex-wrap:wrap;
+    flex-wrap:nowrap;
     overflow:hidden;
-    white-space:normal;
+    white-space:nowrap;
     pointer-events:none;
     transition:opacity 0.15s ease;
   }
@@ -325,12 +325,18 @@
     font-size:14px;
     color:var(--muted);
     line-height:1.5;
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    min-width:0;
+    flex:0 1 auto;
   }
   .diag-type-cursor{
     font-family:var(--font-mono);
     font-size:14px;
     color:var(--diag-accent);
     margin-left:1px;
+    flex-shrink:0;
     animation:diagBlink 1s step-end infinite;
   }
   @keyframes diagBlink{
@@ -462,6 +468,10 @@
     opacity:0.95;
     transform:translateY(-1px);
   }
+
+  /* Marquee — oculto por defecto (solo se usa en móvil) */
+  .tech-marquee{display:none;}
+
   @media (max-width:1024px){
     .tech-stack-grid{
       justify-content:center;
@@ -469,29 +479,41 @@
     }
   }
   @media (max-width:768px){
-    .tech-stack{padding:32px 0;}
-    .tech-stack-wrap{padding:0 20px;}
-    .tech-stack-grid{
-      display:grid;
-      grid-template-columns:repeat(3, minmax(0,1fr));
-      row-gap:26px;
-      column-gap:8px;
-      justify-items:center;
+    .tech-stack{padding:20px 0;}
+    .tech-stack-wrap{display:none;}
+
+    .tech-marquee{
+      display:block;
+      width:100%;
+      overflow:hidden;
+      -webkit-mask-image:linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+      mask-image:linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
     }
-    .tech-logo{
-      min-width:0;
-      gap:7px;
-      height:20px;
+    .tech-marquee-track{
+      display:flex;
+      align-items:center;
+      width:max-content;
+      gap:44px;
+      animation:techMarquee 24s linear infinite;
     }
-    .tech-logo img{
+    .tech-marquee .tech-logo{
+      gap:9px;
+      height:28px;
       flex-shrink:0;
     }
-    .tech-logo .brand-name{font-size:13px;}
+    .tech-marquee .tech-logo .brand-name{font-size:15px;}
+  }
+  @keyframes techMarquee{
+    from{transform:translateX(0);}
+    to{transform:translateX(-50%);}
+  }
+  @media (prefers-reduced-motion:reduce){
+    .tech-marquee-track{animation:none;}
   }
   @media (max-width:400px){
-    .tech-stack-grid{column-gap:6px;}
-    .tech-logo{gap:6px;height:18px;}
-    .tech-logo .brand-name{font-size:12px;}
+    .tech-marquee-track{gap:32px;}
+    .tech-marquee .tech-logo{gap:7px;height:24px;}
+    .tech-marquee .tech-logo .brand-name{font-size:13.5px;}
   }
 
   /* ===== SECTION SHARED ===== */
@@ -886,9 +908,13 @@
 
   /* ======================================================================
      NUEVOS COMPONENTES — MENÚ MÓVIL
-     Botón hamburguesa + panel de navegación. Ocultos por defecto (display:
-     none / opacity:0), por lo que la versión de escritorio no cambia.
+     Botón hamburguesa + dropdown compacto anclado debajo. Ocultos por
+     defecto (display:none / opacity:0), por lo que la versión de
+     escritorio no cambia en absoluto.
      ====================================================================== */
+  .menu-wrap{
+    position:relative;
+  }
   .menu-toggle{
     display:none;
     align-items:center;
@@ -910,30 +936,25 @@
     width:18px;
     height:1.5px;
     background:var(--white);
-    transition:transform 0.25s ease, opacity 0.2s ease, background 0.25s ease;
   }
-  .menu-toggle[aria-expanded="true"] .menu-toggle-bar:nth-child(1){transform:translateY(6.5px) rotate(45deg);background:var(--neon);}
-  .menu-toggle[aria-expanded="true"] .menu-toggle-bar:nth-child(2){opacity:0;}
-  .menu-toggle[aria-expanded="true"] .menu-toggle-bar:nth-child(3){transform:translateY(-6.5px) rotate(-45deg);background:var(--neon);}
 
   .mobile-nav{
     display:none;
-    position:fixed;
-    top:0;
+    position:absolute;
+    top:calc(100% + 10px);
     right:0;
-    bottom:0;
-    left:0;
     z-index:999;
-    background:rgba(5,5,5,0.98);
-    -webkit-backdrop-filter:blur(20px);
-    backdrop-filter:blur(20px);
+    min-width:200px;
+    background:rgba(8,9,13,0.98);
+    border:1px solid var(--surface-border);
+    border-radius:12px;
+    padding:8px;
+    box-shadow:0 20px 40px -14px rgba(0,0,0,0.65);
     opacity:0;
     visibility:hidden;
     pointer-events:none;
-    transform:translateY(-12px);
-    transition:opacity 0.25s ease, transform 0.3s ease, visibility 0s linear 0.3s;
-    overflow-y:auto;
-    -webkit-overflow-scrolling:touch;
+    transform:translateY(-6px);
+    transition:opacity 0.2s ease, transform 0.2s ease, visibility 0s linear 0.2s;
   }
   /* .is-open la controla JS. :target es un respaldo 100% CSS: si el
      JavaScript no llega a ejecutarse por algún motivo, el propio enlace
@@ -944,71 +965,29 @@
     visibility:visible;
     pointer-events:auto;
     transform:translateY(0);
-    transition:opacity 0.25s ease, transform 0.3s ease;
-  }
-  .mobile-nav-inner{
-    position:relative;
-    min-height:100%;
-    padding:100px 24px 40px;
-  }
-  .mobile-nav-inner .grid-bg{opacity:0.6;}
-  .mobile-nav-close{
-    position:absolute;
-    z-index:2;
-    top:24px;
-    right:20px;
-    width:40px;
-    height:40px;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    border:1px solid rgba(255,255,255,0.12);
-    border-radius:8px;
-    text-decoration:none;
-  }
-  .mobile-nav-close span{
-    position:absolute;
-    width:16px;
-    height:1.5px;
-    background:var(--white);
-  }
-  .mobile-nav-close span:first-child{transform:rotate(45deg);}
-  .mobile-nav-close span:last-child{transform:rotate(-45deg);}
-  .mobile-nav-eyebrow{
-    position:relative;
-    z-index:1;
-    display:block;
-    margin-bottom:20px;
+    transition:opacity 0.2s ease, transform 0.2s ease;
   }
   .mobile-nav-links{
-    position:relative;
-    z-index:1;
     display:flex;
     flex-direction:column;
-    margin-bottom:36px;
   }
   .mobile-nav-links a{
     font-family:var(--font-display);
-    font-weight:700;
-    font-size:26px;
+    font-weight:600;
+    font-size:15px;
     letter-spacing:-0.01em;
     color:var(--white);
     text-decoration:none;
-    padding:18px 2px;
-    border-bottom:1px solid var(--surface-border);
+    padding:12px 14px;
+    border-radius:8px;
+    white-space:nowrap;
   }
-  .mobile-nav-links a:active{color:var(--neon);}
-  .mobile-nav-cta{
-    position:relative;
-    z-index:1;
-    display:flex;
-    width:100%;
-    padding:16px 28px;
-    font-size:16px;
+  .mobile-nav-links a:active{
+    background:rgba(0,255,65,0.08);
+    color:var(--neon);
   }
   .menu-toggle:focus-visible,
-  .mobile-nav-links a:focus-visible,
-  .mobile-nav-cta:focus-visible{
+  .mobile-nav-links a:focus-visible{
     outline:2px solid var(--neon);
     outline-offset:2px;
   }
@@ -1070,7 +1049,8 @@
 
     /* Consola de diagnóstico */
     .diag-console{max-width:100%;width:100%;min-height:56px;padding:10px 10px 10px 16px;gap:10px;border-radius:14px;}
-    .diag-type-text,.diag-input{font-size:14px;line-height:1.5;}
+    .diag-type-text{font-size:14px;line-height:1.5;}
+    .diag-input{font-size:16px;line-height:1.5;}
     .diag-submit{height:46px;padding:0 16px;font-size:12.5px;gap:6px;}
     .diag-submit.is-loading{min-width:0;}
 
@@ -1096,9 +1076,6 @@
     /* Footer */
     .footer{padding:28px 20px;}
     .footer .wrap{flex-direction:column;gap:16px;align-items:flex-start;}
-
-    /* Menú móvil */
-    .mobile-nav-inner{padding:88px 20px 40px;}
   }
 
   /* ----- Teléfonos estándar ----- */
@@ -1123,9 +1100,6 @@
     .portal-title{font-size:21px;}
 
     .cta-final h2{font-size:24px;}
-
-    .mobile-nav-inner{padding:80px 16px 36px;}
-    .mobile-nav-links a{font-size:23px;padding:16px 2px;}
   }
 
   /* ----- Teléfonos muy pequeños ----- */
@@ -1144,8 +1118,6 @@
 
     .pilar-card h3{font-size:17px;}
     .portal-title{font-size:20px;}
-
-    .mobile-nav-links a{font-size:21px;}
   }
 </style>
 </head>
@@ -1168,32 +1140,23 @@
       </nav>
       <div class="header-actions">
         <a href="#contacto" class="btn btn-ghost">Agendar Auditoría</a>
-        <a href="#mobileNav" class="menu-toggle" id="menuToggle" role="button" aria-label="Abrir menú de navegación" aria-expanded="false" aria-controls="mobileNav">
-          <span class="menu-toggle-bar"></span>
-          <span class="menu-toggle-bar"></span>
-          <span class="menu-toggle-bar"></span>
-        </a>
+        <div class="menu-wrap" id="menuWrap">
+          <a href="#mobileNav" class="menu-toggle" id="menuToggle" role="button" aria-label="Abrir menú de navegación" aria-expanded="false" aria-controls="mobileNav">
+            <span class="menu-toggle-bar"></span>
+            <span class="menu-toggle-bar"></span>
+            <span class="menu-toggle-bar"></span>
+          </a>
+          <div class="mobile-nav" id="mobileNav" aria-hidden="true">
+            <nav class="mobile-nav-links">
+              <a href="#servicios">Servicios</a>
+              <a href="#portales">Portales</a>
+              <a href="#ia">IA &amp; Automatización</a>
+            </nav>
+          </div>
+        </div>
       </div>
     </div>
   </header>
-
-  <!-- ===== MENÚ MÓVIL (oculto en escritorio) ===== -->
-  <div class="mobile-nav" id="mobileNav" aria-hidden="true">
-    <div class="mobile-nav-inner">
-      <div class="grid-bg"></div>
-      <a href="#" class="mobile-nav-close" id="mobileNavClose" aria-label="Cerrar menú">
-        <span></span>
-        <span></span>
-      </a>
-      <span class="eyebrow mobile-nav-eyebrow">Navegación</span>
-      <nav class="mobile-nav-links">
-        <a href="#servicios">Servicios</a>
-        <a href="#portales">Portales</a>
-        <a href="#ia">IA &amp; Automatización</a>
-      </nav>
-      <a href="#contacto" class="btn btn-primary mobile-nav-cta">Agendar Auditoría</a>
-    </div>
-  </div>
 
   <!-- ===== HERO ===== -->
   <section class="hero">
@@ -1263,6 +1226,61 @@
         <!-- Python -->
         <div class="tech-logo" title="Python">
           <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" alt="Python" onerror="this.style.display='none'" />
+          <span class="brand-name">Python</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Marquee: solo visible en móvil (la grilla de arriba se oculta ahí) -->
+    <div class="tech-marquee">
+      <div class="tech-marquee-track">
+        <div class="tech-logo" title="Figma">
+          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/figma/figma-original.svg" alt="Figma" onerror="this.style.display='none'" />
+          <span class="brand-name">Figma</span>
+        </div>
+        <div class="tech-logo" title="Next.js">
+          <img src="https://cdn.simpleicons.org/nextdotjs" alt="Next.js" onerror="this.style.display='none'" />
+          <span class="brand-name">Next.js</span>
+        </div>
+        <div class="tech-logo" title="OpenAI">
+          <img src="https://api.iconify.design/simple-icons:openai.svg" alt="OpenAI" onerror="this.style.display='none'" />
+          <span class="brand-name">OpenAI</span>
+        </div>
+        <div class="tech-logo" title="Anthropic">
+          <img src="https://api.iconify.design/simple-icons:anthropic.svg" alt="Anthropic" onerror="this.style.display='none'" />
+          <span class="brand-name">Anthropic</span>
+        </div>
+        <div class="tech-logo" title="Supabase">
+          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/supabase/supabase-original.svg" alt="Supabase" onerror="this.style.display='none'" />
+          <span class="brand-name">Supabase</span>
+        </div>
+        <div class="tech-logo" title="Python">
+          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" alt="Python" onerror="this.style.display='none'" />
+          <span class="brand-name">Python</span>
+        </div>
+        <!-- Set duplicado para el loop continuo (oculto de lectores de pantalla) -->
+        <div class="tech-logo" title="Figma" aria-hidden="true">
+          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/figma/figma-original.svg" alt="" onerror="this.style.display='none'" />
+          <span class="brand-name">Figma</span>
+        </div>
+        <div class="tech-logo" title="Next.js" aria-hidden="true">
+          <img src="https://cdn.simpleicons.org/nextdotjs" alt="" onerror="this.style.display='none'" />
+          <span class="brand-name">Next.js</span>
+        </div>
+        <div class="tech-logo" title="OpenAI" aria-hidden="true">
+          <img src="https://api.iconify.design/simple-icons:openai.svg" alt="" onerror="this.style.display='none'" />
+          <span class="brand-name">OpenAI</span>
+        </div>
+        <div class="tech-logo" title="Anthropic" aria-hidden="true">
+          <img src="https://api.iconify.design/simple-icons:anthropic.svg" alt="" onerror="this.style.display='none'" />
+          <span class="brand-name">Anthropic</span>
+        </div>
+        <div class="tech-logo" title="Supabase" aria-hidden="true">
+          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/supabase/supabase-original.svg" alt="" onerror="this.style.display='none'" />
+          <span class="brand-name">Supabase</span>
+        </div>
+        <div class="tech-logo" title="Python" aria-hidden="true">
+          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" alt="" onerror="this.style.display='none'" />
           <span class="brand-name">Python</span>
         </div>
       </div>
@@ -1584,6 +1602,16 @@
       if (!input.disabled) input.focus();
     });
 
+    // Tocar/clickear fuera de la consola: siempre vuelve al estado
+    // original (animación de tipeo visible), haya o no texto escrito.
+    document.addEventListener('click', function (e) {
+      if (form.classList.contains('is-active') && !form.contains(e.target)) {
+        input.value = '';
+        input.blur();
+        resetConsoleLoop();
+      }
+    });
+
     /* Manejo de Submit */
     form.addEventListener('submit', function (e) {
       e.preventDefault();
@@ -1699,25 +1727,25 @@
   })();
 
   /* =====================================================================
-     MENÚ MÓVIL — abre / cierra el panel de navegación táctil
+     MENÚ MÓVIL — dropdown compacto: abre, cierra y se cierra al tocar
+     fuera del panel
      ===================================================================== */
   (function () {
     var toggle = document.getElementById('menuToggle');
     var panel  = document.getElementById('mobileNav');
-    if (!toggle || !panel) return;
+    var wrap   = document.getElementById('menuWrap');
+    if (!toggle || !panel || !wrap) return;
 
     function openMenu() {
       panel.classList.add('is-open');
       panel.setAttribute('aria-hidden', 'false');
       toggle.setAttribute('aria-expanded', 'true');
-      document.body.style.overflow = 'hidden';
     }
 
     function closeMenu() {
       panel.classList.remove('is-open');
       panel.setAttribute('aria-hidden', 'true');
       toggle.setAttribute('aria-expanded', 'false');
-      document.body.style.overflow = '';
     }
 
     toggle.addEventListener('click', function (e) {
@@ -1735,6 +1763,13 @@
 
     panel.querySelectorAll('a').forEach(function (link) {
       link.addEventListener('click', closeMenu);
+    });
+
+    // Cerrar al tocar/clickear fuera del dropdown
+    document.addEventListener('click', function (e) {
+      if (panel.classList.contains('is-open') && !wrap.contains(e.target)) {
+        closeMenu();
+      }
     });
 
     document.addEventListener('keydown', function (e) {
