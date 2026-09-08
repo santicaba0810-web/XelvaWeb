@@ -1,0 +1,1756 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Xelva Studio — Infraestructura Digital de Alto Estatus</title>
+<meta name="description" content="Diseñamos sistemas web, portales de clientes y automatizaciones con IA para escalar operativamente sin fricción.">
+<meta property="og:title" content="Xelva Studio — Infraestructura Digital de Alto Estatus">
+<meta property="og:description" content="Diseñamos sistemas web, portales de clientes y automatizaciones con IA para escalar operativamente sin fricción.">
+<meta property="og:type" content="website">
+<!-- Optimización SEO/Meta: og:image + theme-color -->
+<meta property="og:image" content="[URL_IMAGEN]">
+<meta name="theme-color" content="#050505">
+<link rel="icon" href="/favicon.ico" type="image/x-icon">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg-base:#050505;
+    --surface:#1A1A1A;
+    --surface-border:rgba(255,255,255,0.08);
+    --muted:#888888;
+    --white:#FFFFFF;
+    --neon:#00FF41;
+    --neon-soft:#2BB15C;
+    --font-display:'Space Grotesk', sans-serif;
+    --font-body:'Inter', sans-serif;
+    --font-mono:'JetBrains Mono', monospace;
+    --container:1180px;
+  }
+
+  *{margin:0;padding:0;box-sizing:border-box;}
+
+  html{scroll-behavior:smooth;}
+
+  body{
+    background:var(--bg-base);
+    color:var(--white);
+    font-family:var(--font-body);
+    line-height:1.5;
+    -webkit-font-smoothing:antialiased;
+    position:relative;
+  }
+
+  img,svg{display:block;}
+
+  .wrap{
+    width:100%;
+    max-width:var(--container);
+    margin:0 auto;
+    padding:0 32px;
+  }
+
+  /* ===== TECHNICAL GRID BACKGROUND ===== */
+  .grid-bg{
+    position:absolute;
+    inset:0;
+    background-image:
+      linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+    background-size:48px 48px;
+    pointer-events:none;
+    z-index:0;
+    mask-image:radial-gradient(ellipse at center, black 40%, transparent 80%);
+    -webkit-mask-image:radial-gradient(ellipse at center, black 40%, transparent 80%);
+  }
+
+  .eyebrow{
+    font-family:var(--font-mono);
+    font-size:12px;
+    letter-spacing:0.16em;
+    text-transform:uppercase;
+    color:var(--neon);
+  }
+
+  /* ===== NOTCHED / BEVELED UI DETAIL ===== */
+  .notched{
+    clip-path:polygon(12px 0, 100% 0, 100% calc(100% - 12px), calc(100% - 12px) 100%, 0 100%, 0 12px);
+  }
+
+  .crosshair{
+    position:absolute;
+    width:10px;
+    height:10px;
+    opacity:0.35;
+  }
+  .crosshair::before,.crosshair::after{
+    content:'';
+    position:absolute;
+    background:var(--muted);
+  }
+  .crosshair::before{width:100%;height:1px;top:50%;left:0;transform:translateY(-50%);}
+  .crosshair::after{height:100%;width:1px;left:50%;top:0;transform:translateX(-50%);}
+
+  .btn{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    gap:8px;
+    padding:14px 28px;
+    font-family:var(--font-body);
+    font-weight:600;
+    font-size:15px;
+    text-decoration:none;
+    cursor:pointer;
+    border:1px solid transparent;
+    position:relative;
+  }
+  .btn-primary{
+    background:var(--neon);
+    color:#050505;
+    clip-path:polygon(10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 10px);
+  }
+  .btn-ghost{
+    border-radius:8px;
+    clip-path:none;
+    background:rgba(255,255,255,0.05);
+    border:1px solid rgba(255,255,255,0.12);
+    color:var(--white);
+    font-size:14px;
+    padding:10px 20px;
+    backdrop-filter:blur(12px);
+    transition:border-color 0.2s ease, color 0.2s ease;
+  }
+  .btn-ghost:hover{
+    border-color:var(--neon);
+    color:var(--white);
+  }
+
+  /* ===== HERO SECONDARY BUTTON ===== */
+  .btn-secondary{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    gap:8px;
+    padding:14px 24px;
+    border-radius:10px;
+    border:1px solid rgba(255,255,255,0.15);
+    background:rgba(26,26,26,0.5);
+    color:var(--white);
+    font-family:var(--font-display);
+    font-size:15px;
+    font-weight:500;
+    text-decoration:none;
+    backdrop-filter:blur(8px);
+    transition:background 0.2s ease, border-color 0.2s ease;
+  }
+  .btn-secondary:hover{
+    background:rgba(255,255,255,0.08);
+    border-color:rgba(255,255,255,0.3);
+  }
+
+  /* ===== HEADER (glassmorphism) ===== */
+  .header{
+    position:sticky;
+    top:0;
+    z-index:50;
+    padding:14px 32px;
+    border-bottom:1px solid var(--surface-border);
+    background:rgba(5,5,5,0.8);
+    backdrop-filter:blur(12px);
+    -webkit-backdrop-filter:blur(12px);
+    transition:transform 0.3s ease, background 0.3s ease;
+  }
+  .header--hidden{
+    transform:translateY(-100%);
+  }
+  .header .wrap{
+    display:grid;
+    grid-template-columns:1fr auto 1fr;
+    align-items:center;
+    padding:0;
+  }
+  .logo{height:29px;width:auto;justify-self:start;grid-column:1;}
+  .nav{
+    display:flex;
+    align-items:center;
+    gap:36px;
+    justify-self:center;
+  }
+  .nav a{
+    color:var(--muted);
+    text-decoration:none;
+    font-size:14px;
+    font-weight:500;
+    transition:color 0.2s ease;
+  }
+  .nav a:hover{color:var(--white);}
+  .header-actions{display:flex;align-items:center;justify-self:end;grid-column:3;}
+
+  /* ===== HERO (Limpio & Sobrio) ===== */
+  .hero{
+    min-height:calc(85vh - 80px);
+    padding:100px 32px 120px;
+    border-bottom:1px solid var(--surface-border);
+    position:relative;
+    overflow:hidden;
+    display:flex;
+    align-items:center;
+  }
+  .hero-glow{
+    position:absolute;
+    top:-100px;
+    left:50%;
+    transform:translateX(-50%);
+    width:750px;
+    height:450px;
+    background:radial-gradient(circle, rgba(0, 255, 65, 0.12) 0%, rgba(0, 0, 0, 0) 70%);
+    filter:blur(100px);
+    pointer-events:none;
+    z-index:0;
+  }
+  .hero-mark{
+    position:absolute;
+    top:-40px;
+    right:-20px;
+    width:480px;
+    height:auto;
+    opacity:0.04;
+    transform:rotate(6deg);
+    z-index:0;
+    pointer-events:none;
+  }
+  .hero .wrap{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    text-align:center;
+    gap:36px;
+    position:relative;
+    z-index:1;
+  }
+  .hero h1{
+    font-family:var(--font-display);
+    font-weight:700;
+    font-size:76px;
+    line-height:1.05;
+    letter-spacing:-0.025em;
+    max-width:920px;
+    background:linear-gradient(180deg, #FFFFFF 40%, rgba(255, 255, 255, 0.5) 100%);
+    -webkit-background-clip:text;
+    background-clip:text;
+    -webkit-text-fill-color:transparent;
+  }
+  .hero h1 .accent{
+    background:none;
+    -webkit-text-fill-color:var(--neon);
+    color:var(--neon);
+    text-shadow:0 0 30px rgba(0, 255, 65, 0.2);
+  }
+  .hero p.lead{
+    font-family:var(--font-body);
+    font-weight:400;
+    font-size:20px;
+    line-height:1.6;
+    color:var(--muted);
+    max-width:660px;
+  }
+  /* ===== HERO — CONSOLA DE DIAGNÓSTICO INTERACTIVA ===== */
+  .diag-console{
+    --diag-bg:#090A0F;
+    --diag-border:#1F242D;
+    --diag-text:#FFFFFF;
+    --diag-accent:#00FF41;
+    position:relative;
+    display:flex;
+    align-items:flex-end;
+    gap:10px;
+    width:100%;
+    max-width:680px;
+    min-height:60px;
+    height:auto;
+    margin-top:8px;
+    padding:10px 10px 10px 20px;
+    background:rgba(9,10,15,0.75);
+    border:1px solid var(--diag-border);
+    border-radius:14px;
+    backdrop-filter:blur(16px);
+    -webkit-backdrop-filter:blur(16px);
+    box-shadow:0 0 0 0 rgba(0,255,65,0);
+    transition:border-color 0.3s ease-out, box-shadow 0.3s ease-out;
+  }
+  .diag-console:focus-within{
+    border-color:var(--diag-accent);
+    box-shadow:0 0 0 3px rgba(0,255,65,0.07), 0 0 22px rgba(0,255,65,0.14);
+  }
+  .diag-console.is-shake{
+    border-color:#ff5f56;
+    animation:diagShake 0.4s ease;
+  }
+  @keyframes diagShake{
+    10%,90%{transform:translateX(-1px);}
+    20%,80%{transform:translateX(2px);}
+    30%,50%,70%{transform:translateX(-3px);}
+    40%,60%{transform:translateX(3px);}
+  }
+
+  .diag-field{
+    position:relative;
+    flex:1;
+    min-width:0;
+    display:flex;
+    align-items:center;
+    align-self:center;
+    padding:4px 0;
+  }
+  .diag-type-layer{
+    position:absolute;
+    inset:0;
+    display:flex;
+    align-items:center;
+    flex-wrap:wrap;
+    overflow:hidden;
+    white-space:normal;
+    pointer-events:none;
+    transition:opacity 0.15s ease;
+  }
+  .diag-console.is-active .diag-type-layer{
+    opacity:0;
+    visibility:hidden;
+  }
+  .diag-type-text{
+    font-family:var(--font-mono);
+    font-size:14px;
+    color:var(--muted);
+    line-height:1.5;
+  }
+  .diag-type-cursor{
+    font-family:var(--font-mono);
+    font-size:14px;
+    color:var(--diag-accent);
+    margin-left:1px;
+    animation:diagBlink 1s step-end infinite;
+  }
+  @keyframes diagBlink{
+    0%,49%{opacity:1;}
+    50%,100%{opacity:0;}
+  }
+
+  .diag-input{
+    width:100%;
+    height:22px;
+    max-height:120px;
+    background:transparent;
+    border:none;
+    outline:none;
+    padding:0;
+    font-family:var(--font-mono);
+    font-size:14px;
+    line-height:1.5;
+    color:var(--diag-text);
+    caret-color:var(--diag-accent);
+    resize:none;
+    overflow-y:auto;
+    scrollbar-width:thin;
+    scrollbar-color:rgba(255,255,255,0.2) transparent;
+  }
+  .diag-input::-webkit-scrollbar{
+    width:5px;
+  }
+  .diag-input::-webkit-scrollbar-track{
+    background:transparent;
+  }
+  .diag-input::-webkit-scrollbar-thumb{
+    background:rgba(255,255,255,0.18);
+    border-radius:10px;
+  }
+  .diag-input::-webkit-scrollbar-thumb:hover{
+    background:rgba(255,255,255,0.35);
+  }
+  .diag-input::placeholder{color:transparent;}
+  .diag-input:disabled{opacity:0.55;cursor:not-allowed;}
+
+  .diag-submit{
+    flex-shrink:0;
+    align-self:flex-end;
+    margin-bottom:2px;
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    gap:8px;
+    height:44px;
+    padding:0 18px;
+    border:1px solid transparent;
+    border-radius:9px;
+    background:var(--diag-accent);
+    color:#050505;
+    font-family:var(--font-mono);
+    font-weight:600;
+    font-size:13px;
+    letter-spacing:0.02em;
+    white-space:nowrap;
+    cursor:pointer;
+    transition:background 0.2s ease, transform 0.15s ease, color 0.2s ease, border-color 0.2s ease;
+  }
+  .diag-submit:hover:not(:disabled){background:#2BFF5C;transform:translateY(-1px);}
+  .diag-submit:active:not(:disabled){transform:translateY(0);}
+  .diag-submit:disabled{cursor:not-allowed;}
+  .diag-submit.is-loading{
+    background:#0F1611;
+    color:var(--diag-accent);
+    border-color:rgba(0,255,65,0.35);
+    min-width:172px;
+  }
+  .diag-submit.is-success{
+    background:#0F2A17;
+    color:var(--diag-accent);
+    border-color:var(--diag-accent);
+  }
+  .diag-submit-arrow{flex-shrink:0;transition:opacity 0.2s ease;}
+  .diag-submit.is-loading .diag-submit-arrow,
+  .diag-submit.is-success .diag-submit-arrow{display:none;}
+
+  /* ===== SECCIÓN TECH STACK (EXTENDIDA CON NOMBRES) ===== */
+  .tech-stack{
+    padding:44px 0;
+    border-bottom:1px solid var(--surface-border);
+    background:rgba(5,5,5,0.8);
+    position:relative;
+    z-index:1;
+    width:100%;
+  }
+  .tech-stack-wrap{
+    width:100%;
+    max-width:1380px;
+    margin:0 auto;
+    padding:0 40px;
+  }
+  .tech-stack-grid{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:32px;
+    width:100%;
+    flex-wrap:wrap;
+  }
+  .tech-logo{
+    display:inline-flex;
+    align-items:center;
+    gap:10px;
+    height:27px;
+    opacity:0.45;
+    filter:brightness(0) invert(1);
+    transition:opacity 0.25s ease, transform 0.25s ease;
+    cursor:default;
+  }
+  .tech-logo img{
+    height:100%;
+    width:auto;
+    object-fit:contain;
+  }
+  .tech-logo .brand-name{
+    font-family:var(--font-display);
+    font-size:16px;
+    font-weight:700;
+    letter-spacing:-0.01em;
+    color:#FFFFFF;
+    white-space:nowrap;
+  }
+  .tech-logo:hover{
+    opacity:0.95;
+    transform:translateY(-1px);
+  }
+  @media (max-width:1024px){
+    .tech-stack-grid{
+      justify-content:center;
+      gap:36px 48px;
+    }
+  }
+  @media (max-width:768px){
+    .tech-stack{padding:32px 0;}
+    .tech-stack-wrap{padding:0 20px;}
+    .tech-stack-grid{
+      display:grid;
+      grid-template-columns:repeat(3, minmax(0,1fr));
+      row-gap:26px;
+      column-gap:8px;
+      justify-items:center;
+    }
+    .tech-logo{
+      min-width:0;
+      gap:7px;
+      height:20px;
+    }
+    .tech-logo img{
+      flex-shrink:0;
+    }
+    .tech-logo .brand-name{font-size:13px;}
+  }
+  @media (max-width:400px){
+    .tech-stack-grid{column-gap:6px;}
+    .tech-logo{gap:6px;height:18px;}
+    .tech-logo .brand-name{font-size:12px;}
+  }
+
+  /* ===== SECTION SHARED ===== */
+  .section{
+    padding:100px 32px;
+    border-bottom:1px solid var(--surface-border);
+    position:relative;
+    overflow:hidden;
+  }
+  .section-head{
+    display:flex;
+    flex-direction:column;
+    gap:16px;
+    margin-bottom:64px;
+    max-width:640px;
+    position:relative;
+    z-index:1;
+  }
+  .section-head h2{
+    font-family:var(--font-display);
+    font-weight:700;
+    font-size:38px;
+    letter-spacing:-0.01em;
+  }
+  .section-head p{
+    color:var(--muted);
+    font-size:16px;
+  }
+
+  /* ===== PILARES DE SERVICIO (MARCO CON ÍCONO SUPERIOR DERECHO) ===== */
+  .pilares-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 28px;
+    position: relative;
+    z-index: 1;
+  }
+  .pilar-card {
+    background: rgba(15, 15, 15, 0.6);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.07);
+    border-radius: 20px;
+    padding: 36px 28px 32px 28px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    gap: 16px;
+    position: relative;
+    overflow: hidden;
+    isolation: isolate; /* Fix Safari Mobile Overflow: fuerza recorte estricto en WebKit */
+    transition: transform 0.5s cubic-bezier(0.16,1,0.3,1), border-color 0.4s ease, background 0.4s ease;
+  }
+  .pilar-card:hover {
+    transform: translateY(-6px) scale(1.01);
+    border-color: rgba(0, 255, 65, 0.3);
+  }
+  .pilar-card::before {
+    content: '';
+    position: absolute;
+    top: 0; right: 0;
+    width: 110px; height: 110px;
+    background: var(--neon);
+    filter: blur(90px);
+    opacity: 0.15;
+    pointer-events: none;
+    border-radius: 20px;
+  }
+  /* Glow que sigue al cursor (--mouse-x / --mouse-y actualizadas por JS) */
+  .pilar-card::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background: radial-gradient(240px circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(0,255,65,0.16), transparent 70%);
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    pointer-events: none;
+    z-index: 0;
+  }
+  .pilar-card:hover::after {
+    opacity: 1;
+  }
+  .pilar-card .crosshair {
+    top: 12px; 
+    right: 12px;
+  }
+  .pilar-card h3 {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 21px;
+    position: relative;
+    z-index: 1;
+    margin: 0;
+  }
+  .pilar-card p {
+    color: var(--muted);
+    font-size: 14.5px;
+    line-height: 1.6;
+    position: relative;
+    z-index: 1;
+    margin: 0;
+  }
+  .pilar-bg-draw {
+    position: absolute;
+    right: -20px;
+    bottom: -20px;
+    width: 220px;
+    height: 220px;
+    opacity: 0.06;
+    color: var(--white);
+    pointer-events: none;
+    transition: opacity 0.3s ease, transform 0.5s cubic-bezier(0.16,1,0.3,1), color 0.4s ease;
+    z-index: 0;
+  }
+  .pilar-card:hover .pilar-bg-draw {
+    opacity: 0.16;
+    color: var(--neon);
+    transform: scale(1.08);
+  }
+  /* Cambia trazos y rellenos a un gradiente verde neón al hacer hover */
+  .pilar-card:hover .pilar-bg-draw [stroke="currentColor"] {
+    stroke: url(#pilarNeonGradient);
+  }
+  .pilar-card:hover .pilar-bg-draw [fill="currentColor"] {
+    fill: url(#pilarNeonGradient);
+  }
+
+  /* --- Animaciones internas de los SVG de pilares --- */
+  @keyframes scan-sweep {
+    0%   { transform: translateY(0);    opacity: 0; }
+    8%   { opacity: 0.9; }
+    92%  { opacity: 0.9; }
+    100% { transform: translateY(140px); opacity: 0; }
+  }
+  .pilar-scan-1 .scan-beam {
+    transform-box: fill-box;
+    transform-origin: top left;
+    opacity: 0;
+    animation: scan-sweep 3.2s ease-in-out infinite;
+    animation-play-state: paused;
+  }
+  .pilar-card:hover .pilar-scan-1 .scan-beam {
+    animation-play-state: running;
+  }
+
+  @keyframes pulse-node {
+    0%, 100% { r: 10; opacity: 0.55; }
+    50%      { r: 13; opacity: 1; }
+  }
+  .pilar-pulse-2 circle {
+    transform-box: fill-box;
+    transform-origin: center;
+    animation: pulse-node 2.4s ease-in-out infinite;
+  }
+  .pilar-pulse-2 circle:nth-of-type(1){animation-delay:0s;}
+  .pilar-pulse-2 circle:nth-of-type(2){animation-delay:0.2s;}
+  .pilar-pulse-2 circle:nth-of-type(3){animation-delay:0.4s;}
+  .pilar-pulse-2 circle:nth-of-type(4){animation-delay:0.6s;}
+  .pilar-pulse-2 circle:nth-of-type(5){animation-delay:0.8s;}
+  .pilar-pulse-2 circle:nth-of-type(6){animation-delay:1s;}
+
+  @keyframes synapsis-glow {
+    0%, 100% { opacity: 0.35; filter: drop-shadow(0 0 0 rgba(0,255,65,0)); }
+    50%      { opacity: 1;    filter: drop-shadow(0 0 4px rgba(0,255,65,0.85)); }
+  }
+  .pilar-neuro-3 circle {
+    animation: synapsis-glow 2.6s ease-in-out infinite;
+  }
+  .pilar-neuro-3 circle:nth-of-type(2n){animation-delay:0.3s;}
+  .pilar-neuro-3 circle:nth-of-type(3n){animation-delay:0.6s;}
+  .pilar-neuro-3 line{
+    animation: synapsis-glow 2.6s ease-in-out infinite;
+    animation-delay: 0.15s;
+  }
+
+  /* Accesibilidad: respeta prefers-reduced-motion desactivando animaciones decorativas */
+  @media (prefers-reduced-motion: reduce) {
+    .pilar-scan-1 .scan-beam,
+    .pilar-pulse-2 circle,
+    .pilar-neuro-3 circle,
+    .pilar-neuro-3 line,
+    .diag-type-cursor {
+      animation: none !important;
+    }
+  }
+
+  /* ===== PORTALES ===== */
+  .portales-grid{
+    display:grid;
+    grid-template-columns:repeat(3, 1fr);
+    gap:24px;
+    align-items:stretch;
+    position:relative;
+    z-index:1;
+  }
+  .portal-card{
+    border-radius:16px;
+    background:#0A0A0A;
+    border:1px solid rgba(255,255,255,0.1);
+    display:flex;
+    flex-direction:column;
+    gap:28px;
+    padding:32px 28px;
+    text-decoration:none;
+    position:relative;
+    overflow:hidden;
+    will-change:transform;
+    backface-visibility:hidden;
+    -webkit-backface-visibility:hidden;
+    transform:translateZ(0);
+    -webkit-font-smoothing:antialiased;
+    -moz-osx-font-smoothing:grayscale;
+    transition:border-color 0.4s ease, transform 0.5s cubic-bezier(0.16,1,0.3,1);
+  }
+  .portal-card > *{
+    position:relative;
+    z-index:1;
+  }
+  /* Glow que sigue al cursor (--mouse-x / --mouse-y actualizadas por JS) */
+  .portal-card::before{
+    content:'';
+    position:absolute;
+    inset:0;
+    border-radius:inherit;
+    background:radial-gradient(240px circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(0,255,65,0.14), transparent 70%);
+    opacity:0;
+    transition:opacity 0.4s ease;
+    pointer-events:none;
+    z-index:0;
+  }
+  .portal-card:hover::before{
+    opacity:1;
+  }
+  .portal-card:hover{
+    transform:translateY(-6px);
+    border-color:rgba(255,255,255,0.22);
+  }
+  .portal-card.featured{
+    background:#0D120E;
+    border-color:rgba(0,255,65,0.4);
+    box-shadow:0 0 0 1px rgba(0,255,65,0.12), 0 30px 60px -30px rgba(0,255,65,0.3);
+  }
+  .portal-card.featured:hover{
+    border-color:rgba(0,255,65,0.65);
+  }
+
+  .portal-header{
+    display:flex;
+    flex-direction:column;
+    gap:14px;
+    min-height:160px;
+  }
+  .portal-top-row{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+  }
+  .portal-tier{
+    font-family:var(--font-body);
+    font-size:11px;
+    font-weight:600;
+    letter-spacing:0.05em;
+    text-transform:uppercase;
+    color:var(--neon-soft);
+  }
+  .portal-card.featured .portal-tier{color:var(--neon);}
+  .portal-badge-popular{
+    font-family:var(--font-mono);
+    font-size:10px;
+    letter-spacing:0.1em;
+    text-transform:uppercase;
+    font-weight:600;
+    color:#050505;
+    background:var(--neon);
+    padding:4px 10px;
+    border-radius:20px;
+  }
+  .portal-title{
+    font-family:var(--font-display);
+    font-weight:700;
+    font-size:28px;
+    color:var(--white);
+  }
+  .portal-desc{
+    font-family:var(--font-body);
+    font-size:14.5px;
+    color:var(--muted);
+    line-height:1.55;
+  }
+  .portal-divider{
+    border-top:1px solid rgba(255,255,255,0.1);
+  }
+
+  .portal-note{
+    font-family:var(--font-mono);
+    font-size:12px;
+    color:var(--muted);
+    min-height:20px;
+    display:block;
+  }
+  .portal-features{
+    display:flex;
+    flex-direction:column;
+    gap:16px;
+    flex:1;
+  }
+  .portal-feature{
+    display:flex;
+    align-items:flex-start;
+    gap:10px;
+  }
+  .portal-feature svg{
+    flex-shrink:0;
+    margin-top:2px;
+  }
+  .portal-feature p{
+    font-family:var(--font-body);
+    font-size:14px;
+    line-height:1.5;
+    color:var(--muted);
+  }
+  .portal-feature p b{
+    color:var(--white);
+    font-weight:600;
+  }
+
+  .portal-cta{
+    margin-top:auto;
+    padding-top:8px;
+  }
+  .portal-cta .btn{
+    width:100%;
+  }
+
+  /* ===== CTA FINAL ===== */
+  .cta-final{
+    padding:120px 32px;
+    border-bottom:1px solid var(--surface-border);
+    position:relative;
+    overflow:hidden;
+  }
+  .cta-glow{
+    position:absolute;
+    bottom:-160px;
+    left:50%;
+    transform:translateX(-50%);
+    width:600px;
+    height:360px;
+    background:var(--neon);
+    filter:blur(120px);
+    opacity:0.15;
+    pointer-events:none;
+  }
+  .cta-final .wrap{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    text-align:center;
+    gap:28px;
+    position:relative;
+    z-index:1;
+  }
+  .cta-final h2{
+    font-family:var(--font-display);
+    font-weight:700;
+    font-size:42px;
+    max-width:640px;
+    letter-spacing:-0.01em;
+  }
+  .cta-final .btn-primary{
+    padding:16px 34px;
+    font-size:16px;
+  }
+
+  /* ===== FOOTER ===== */
+  .footer{
+    padding:32px;
+  }
+  .footer .wrap{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+  }
+  .footer-logo{height:18px;width:auto;}
+  .footer p{
+    font-family:var(--font-mono);
+    font-size:12px;
+    color:var(--muted);
+  }
+
+  /* ======================================================================
+     NUEVOS COMPONENTES — MENÚ MÓVIL
+     Botón hamburguesa + panel de navegación. Ocultos por defecto (display:
+     none / opacity:0), por lo que la versión de escritorio no cambia.
+     ====================================================================== */
+  .menu-toggle{
+    display:none;
+    align-items:center;
+    justify-content:center;
+    flex-direction:column;
+    gap:5px;
+    width:44px;
+    height:44px;
+    flex-shrink:0;
+    background:rgba(255,255,255,0.05);
+    border:1px solid rgba(255,255,255,0.12);
+    border-radius:8px;
+    cursor:pointer;
+    text-decoration:none;
+    -webkit-tap-highlight-color:transparent;
+  }
+  .menu-toggle-bar{
+    display:block;
+    width:18px;
+    height:1.5px;
+    background:var(--white);
+    transition:transform 0.25s ease, opacity 0.2s ease, background 0.25s ease;
+  }
+  .menu-toggle[aria-expanded="true"] .menu-toggle-bar:nth-child(1){transform:translateY(6.5px) rotate(45deg);background:var(--neon);}
+  .menu-toggle[aria-expanded="true"] .menu-toggle-bar:nth-child(2){opacity:0;}
+  .menu-toggle[aria-expanded="true"] .menu-toggle-bar:nth-child(3){transform:translateY(-6.5px) rotate(-45deg);background:var(--neon);}
+
+  .mobile-nav{
+    display:none;
+    position:fixed;
+    top:0;
+    right:0;
+    bottom:0;
+    left:0;
+    z-index:999;
+    background:rgba(5,5,5,0.98);
+    -webkit-backdrop-filter:blur(20px);
+    backdrop-filter:blur(20px);
+    opacity:0;
+    visibility:hidden;
+    pointer-events:none;
+    transform:translateY(-12px);
+    transition:opacity 0.25s ease, transform 0.3s ease, visibility 0s linear 0.3s;
+    overflow-y:auto;
+    -webkit-overflow-scrolling:touch;
+  }
+  /* .is-open la controla JS. :target es un respaldo 100% CSS: si el
+     JavaScript no llega a ejecutarse por algún motivo, el propio enlace
+     <a href="#mobileNav"> abre el panel igual, sin depender de ningún script. */
+  .mobile-nav.is-open,
+  .mobile-nav:target{
+    opacity:1;
+    visibility:visible;
+    pointer-events:auto;
+    transform:translateY(0);
+    transition:opacity 0.25s ease, transform 0.3s ease;
+  }
+  .mobile-nav-inner{
+    position:relative;
+    min-height:100%;
+    padding:100px 24px 40px;
+  }
+  .mobile-nav-inner .grid-bg{opacity:0.6;}
+  .mobile-nav-close{
+    position:absolute;
+    z-index:2;
+    top:24px;
+    right:20px;
+    width:40px;
+    height:40px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    border:1px solid rgba(255,255,255,0.12);
+    border-radius:8px;
+    text-decoration:none;
+  }
+  .mobile-nav-close span{
+    position:absolute;
+    width:16px;
+    height:1.5px;
+    background:var(--white);
+  }
+  .mobile-nav-close span:first-child{transform:rotate(45deg);}
+  .mobile-nav-close span:last-child{transform:rotate(-45deg);}
+  .mobile-nav-eyebrow{
+    position:relative;
+    z-index:1;
+    display:block;
+    margin-bottom:20px;
+  }
+  .mobile-nav-links{
+    position:relative;
+    z-index:1;
+    display:flex;
+    flex-direction:column;
+    margin-bottom:36px;
+  }
+  .mobile-nav-links a{
+    font-family:var(--font-display);
+    font-weight:700;
+    font-size:26px;
+    letter-spacing:-0.01em;
+    color:var(--white);
+    text-decoration:none;
+    padding:18px 2px;
+    border-bottom:1px solid var(--surface-border);
+  }
+  .mobile-nav-links a:active{color:var(--neon);}
+  .mobile-nav-cta{
+    position:relative;
+    z-index:1;
+    display:flex;
+    width:100%;
+    padding:16px 28px;
+    font-size:16px;
+  }
+  .menu-toggle:focus-visible,
+  .mobile-nav-links a:focus-visible,
+  .mobile-nav-cta:focus-visible{
+    outline:2px solid var(--neon);
+    outline-offset:2px;
+  }
+
+  /* ======================================================================
+     El menú se activa en el mismo punto donde ya desaparecía la navegación
+     de escritorio (900px), para que Servicios / Portales / IA & Automa-
+     tización sigan siendo siempre accesibles.
+     ====================================================================== */
+  @media (max-width:900px){
+    .nav{display:none;}
+    .menu-toggle{display:inline-flex;}
+    .header-actions{gap:10px;}
+    .header-actions .btn-ghost{display:none;}
+    .mobile-nav{display:block;}
+  }
+
+  /* ======================================================================
+     RESPONSIVE — MÓVIL (Mobile First, sin alterar ninguna regla de escritorio)
+     ====================================================================== */
+  @media (max-width:768px){
+    html,body{overflow-x:hidden;}
+
+    .grid-bg{opacity:0.75;}
+
+    .wrap{padding:0 20px;}
+    .section,.cta-final{padding:64px 20px;}
+    .section-head{margin-bottom:40px;gap:12px;}
+    .section-head h2{font-size:28px;}
+    .section-head p{font-size:15px;}
+
+    /* Header */
+    .header{padding:12px 20px;}
+    .logo{height:26px;}
+    .btn-ghost{padding:12px 20px;}
+    .btn-secondary{padding:13px 20px;}
+
+    /* Hero */
+    .hero{padding:64px 20px 48px; min-height:auto;}
+    .hero-glow{width:300px;height:240px;top:-60px;opacity:0.85;}
+    .hero-mark{width:200px;top:-10px;right:-50px;opacity:0.035;}
+    .hero .wrap{gap:24px;}
+    .hero h1{font-size:36px !important;line-height:1.15;letter-spacing:-0.02em;max-width:100%;}
+    .hero p.lead{font-size:16px;line-height:1.55;max-width:100%;}
+
+    /* Reducción de ruido visual: en móvil no hay hover, así que las
+       animaciones decorativas que corrían todo el tiempo sin depender
+       de hover (pulse-node, synapsis-glow) se congelan, y los glows
+       permanentes bajan de intensidad para que las tarjetas no compitan
+       entre sí. La identidad (color, forma, líneas) se mantiene intacta. */
+    .pilar-pulse-2 circle,
+    .pilar-neuro-3 circle,
+    .pilar-neuro-3 line{
+      animation:none;
+    }
+    .pilar-card::before{opacity:0.08;}
+    .pilar-bg-draw{opacity:0.045;}
+    .cta-glow{opacity:0.1;}
+
+    /* Consola de diagnóstico */
+    .diag-console{max-width:100%;width:100%;min-height:56px;padding:10px 10px 10px 16px;gap:10px;border-radius:14px;}
+    .diag-type-text,.diag-input{font-size:14px;line-height:1.5;}
+    .diag-submit{height:46px;padding:0 16px;font-size:12.5px;gap:6px;}
+    .diag-submit.is-loading{min-width:0;}
+
+    /* Pilares */
+    .pilares-grid{display:flex;flex-direction:column;gap:16px;}
+    .pilar-card{padding:32px 20px 26px;gap:14px;}
+    .pilar-card h3{font-size:19px;}
+    .pilar-card p{font-size:14.5px;}
+    .pilar-bg-draw{width:170px;height:170px;right:-16px;bottom:-16px;}
+
+    /* Portales */
+    .portales-grid{display:flex;flex-direction:column;gap:20px;}
+    .portal-card{padding:28px 20px;gap:24px;}
+    .portal-header{min-height:auto;}
+    .portal-title{font-size:23px;}
+
+    /* CTA final */
+    .cta-final{padding:64px 20px;}
+    .cta-glow{width:420px;height:280px;bottom:-140px;}
+    .cta-final h2{font-size:27px;}
+    .cta-final .btn-primary{width:100%;padding:16px 24px;}
+
+    /* Footer */
+    .footer{padding:28px 20px;}
+    .footer .wrap{flex-direction:column;gap:16px;align-items:flex-start;}
+
+    /* Menú móvil */
+    .mobile-nav-inner{padding:88px 20px 40px;}
+  }
+
+  /* ----- Teléfonos estándar ----- */
+  @media (max-width:480px){
+    .wrap{padding:0 16px;}
+    .section,.cta-final{padding:52px 16px;}
+    .header{padding:12px 16px;}
+    .logo{height:24px;}
+
+    .section-head h2{font-size:25px;}
+
+    .hero{padding:52px 16px 40px;}
+    .hero .wrap{gap:20px;}
+    .hero h1{font-size:32px !important;}
+    .hero p.lead{font-size:15px;}
+
+    .pilar-card{padding:28px 18px 22px;}
+    .pilar-card h3{font-size:18px;}
+    .pilar-bg-draw{width:145px;height:145px;}
+
+    .portal-card{padding:24px 18px;}
+    .portal-title{font-size:21px;}
+
+    .cta-final h2{font-size:24px;}
+
+    .mobile-nav-inner{padding:80px 16px 36px;}
+    .mobile-nav-links a{font-size:23px;padding:16px 2px;}
+  }
+
+  /* ----- Teléfonos muy pequeños ----- */
+  @media (max-width:400px){
+    .diag-console{padding:0 5px 0 12px;}
+    .diag-submit-label{display:none;}
+    .diag-submit{width:44px;height:44px;padding:0;}
+    .diag-submit.is-loading .diag-submit-label{display:inline;font-size:10px;}
+    .diag-submit.is-loading{width:auto;padding:0 10px;}
+    .diag-submit.is-success .diag-submit-label{display:inline;font-size:10px;}
+    .diag-submit.is-success{width:auto;padding:0 10px;}
+
+    .hero h1{font-size:28px !important;}
+    .hero p.lead{font-size:14.5px;}
+    .hero-mark{display:none;}
+
+    .pilar-card h3{font-size:17px;}
+    .portal-title{font-size:20px;}
+
+    .mobile-nav-links a{font-size:21px;}
+  }
+</style>
+</head>
+<body>
+
+  <!-- ===== HEADER ===== -->
+  <header class="header">
+    <div class="wrap">
+      <svg class="logo" viewBox="0 0 800 176" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M352.48 64.04V96.44H276.96V118.13H366.2V150.68H237.5V11.17H366.24V44H278L277.99 64.04H352.48Z" fill="#A3A3A3"/>
+        <path d="M508.27 150.41H386.96V11.1H425.94V118.03L508.27 118.13V150.41Z" fill="#A3A3A3"/>
+        <path d="M563.785 102.794L610.21 11.14H653.027L580.08 150.4H547.5L474.324 11.33H516.64L563.785 102.794Z" fill="#A3A3A3"/>
+        <path d="M620.5 150.4L663.115 150.41L710.5 54.9999L757.69 150.41H799.591L731.17 11.14H689.581L620.5 150.4Z" fill="#A3A3A3"/>
+        <path d="M233.92 11.3C217.77 11.17 201.61 11.07 185.46 11.01L138.23 58.79L85.53 2.08L22.07 2L92.39 83.13L8 174.85L70.64 175.35L138.92 106.21L180.26 150.31L227 149.5L166.71 82.63L233.92 11.3Z" fill="#00FF41"/>
+      </svg>
+      <nav class="nav">
+        <a href="#servicios">Servicios</a>
+        <a href="#portales">Portales</a>
+        <a href="#ia">IA &amp; Automatización</a>
+      </nav>
+      <div class="header-actions">
+        <a href="#contacto" class="btn btn-ghost">Agendar Auditoría</a>
+        <a href="#mobileNav" class="menu-toggle" id="menuToggle" role="button" aria-label="Abrir menú de navegación" aria-expanded="false" aria-controls="mobileNav">
+          <span class="menu-toggle-bar"></span>
+          <span class="menu-toggle-bar"></span>
+          <span class="menu-toggle-bar"></span>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- ===== MENÚ MÓVIL (oculto en escritorio) ===== -->
+  <div class="mobile-nav" id="mobileNav" aria-hidden="true">
+    <div class="mobile-nav-inner">
+      <div class="grid-bg"></div>
+      <a href="#" class="mobile-nav-close" id="mobileNavClose" aria-label="Cerrar menú">
+        <span></span>
+        <span></span>
+      </a>
+      <span class="eyebrow mobile-nav-eyebrow">Navegación</span>
+      <nav class="mobile-nav-links">
+        <a href="#servicios">Servicios</a>
+        <a href="#portales">Portales</a>
+        <a href="#ia">IA &amp; Automatización</a>
+      </nav>
+      <a href="#contacto" class="btn btn-primary mobile-nav-cta">Agendar Auditoría</a>
+    </div>
+  </div>
+
+  <!-- ===== HERO ===== -->
+  <section class="hero">
+    <div class="grid-bg"></div>
+    <div class="hero-glow"></div>
+    <svg class="hero-mark" viewBox="0 0 320 251" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M318.846 14.7104C297.256 14.7604 275.666 14.7304 254.066 14.6004L190.076 80.3904L110.926 0.250366L63.5156 0.405366L16.1056 0.560366L122.066 116.89L61.3156 183.64L0.565567 250.39H89.5856L185.376 149.32L245.846 213.17L318.176 213.28L228.446 118.09L318.846 14.7104Z" fill="#00FF41"/>
+    </svg>
+    <div class="wrap">
+      <h1>Infraestructura Digital de <span class="accent">Alto Estatus.</span></h1>
+      <p class="lead">Diseñamos tu identidad comercial y estructuramos tu operación interna en un único ecosistema Premium. El factor de confianza decisivo para cerrar clientes de alto valor.</p>
+      <form class="diag-console" id="diagConsole" novalidate>
+        <div class="diag-field">
+          <div class="diag-type-layer" aria-hidden="true">
+            <span class="diag-type-text" id="diagTypeText"></span><span class="diag-type-cursor" id="diagTypeCursor">_</span>
+          </div>
+          <textarea
+            class="diag-input"
+            id="diagInput"
+            name="diagnostico"
+            rows="1"
+            autocomplete="off"
+            spellcheck="false"
+            aria-label="Terminal de diagnóstico operativo. Escribe tu consulta y presiona Ejecutar."
+          ></textarea>
+        </div>
+        <button type="submit" class="diag-submit" id="diagSubmit" aria-live="polite">
+          <span class="diag-submit-label" id="diagSubmitLabel">EJECUTAR</span>
+          <svg class="diag-submit-arrow" width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path d="M2.5 7H11.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+            <path d="M7.5 3L11.5 7L7.5 11" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+      </form>
+    </div>
+  </section>
+
+  <!-- ===== TECH STACK / SOCIAL PROOF ===== -->
+  <section class="tech-stack">
+    <div class="tech-stack-wrap">
+      <div class="tech-stack-grid">
+        <!-- Figma -->
+        <div class="tech-logo" title="Figma">
+          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/figma/figma-original.svg" alt="Figma" onerror="this.style.display='none'" />
+          <span class="brand-name">Figma</span>
+        </div>
+        <!-- Next.js -->
+        <div class="tech-logo" title="Next.js">
+          <img src="https://cdn.simpleicons.org/nextdotjs" alt="Next.js" onerror="this.style.display='none'" />
+          <span class="brand-name">Next.js</span>
+        </div>
+        <!-- OpenAI -->
+        <div class="tech-logo" title="OpenAI">
+          <img src="https://api.iconify.design/simple-icons:openai.svg" alt="OpenAI" onerror="this.style.display='none'" />
+          <span class="brand-name">OpenAI</span>
+        </div>
+        <!-- Anthropic -->
+        <div class="tech-logo" title="Anthropic">
+          <img src="https://api.iconify.design/simple-icons:anthropic.svg" alt="Anthropic" onerror="this.style.display='none'" />
+          <span class="brand-name">Anthropic</span>
+        </div>
+        <!-- Supabase -->
+        <div class="tech-logo" title="Supabase">
+          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/supabase/supabase-original.svg" alt="Supabase" onerror="this.style.display='none'" />
+          <span class="brand-name">Supabase</span>
+        </div>
+        <!-- Python -->
+        <div class="tech-logo" title="Python">
+          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" alt="Python" onerror="this.style.display='none'" />
+          <span class="brand-name">Python</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== PILARES DE SERVICIO ===== -->
+  <section class="section" id="servicios">
+    <div class="grid-bg"></div>
+    <div class="wrap">
+      <div class="section-head">
+        <span class="eyebrow">Pilares de Servicio</span>
+        <h2>Tres disciplinas, un solo sistema.</h2>
+        <p>Diseño, procesos e inteligencia artificial operando como una sola infraestructura, no como servicios sueltos.</p>
+      </div>
+      <svg width="0" height="0" style="position:absolute;overflow:hidden" aria-hidden="true" focusable="false">
+        <defs>
+          <linearGradient id="pilarNeonGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#00FF41"/>
+            <stop offset="100%" stop-color="#7CFFB2"/>
+          </linearGradient>
+        </defs>
+      </svg>
+      <div class="pilares-grid">
+
+        <div class="pilar-card">
+          <span class="crosshair"></span>
+          <svg class="pilar-bg-draw pilar-scan-1" viewBox="0 0 220 220" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="20" y="20" width="180" height="140" rx="6" stroke="currentColor" stroke-width="1"/>
+            <line x1="20" y1="46" x2="200" y2="46" stroke="currentColor" stroke-width="1"/>
+            <circle cx="34" cy="33" r="3" fill="currentColor"/>
+            <circle cx="46" cy="33" r="3" fill="currentColor"/>
+            <circle cx="58" cy="33" r="3" fill="currentColor"/>
+            <rect x="34" y="60" width="50" height="86" rx="3" stroke="currentColor" stroke-width="1"/>
+            <rect x="96" y="60" width="104" height="40" rx="3" stroke="currentColor" stroke-width="1"/>
+            <rect x="96" y="108" width="104" height="38" rx="3" stroke="currentColor" stroke-width="1"/>
+            <line x1="20" y1="180" x2="140" y2="180" stroke="currentColor" stroke-width="1"/>
+            <line x1="20" y1="194" x2="100" y2="194" stroke="currentColor" stroke-width="1"/>
+            <rect class="scan-beam" x="20" y="20" width="180" height="3" fill="currentColor"/>
+          </svg>
+          <h3>Diseño Web Premium</h3>
+          <p>Estética de vanguardia que asegura consideración visual y proyecta autoridad de mercado ante competidores.</p>
+        </div>
+
+        <div class="pilar-card">
+          <span class="crosshair"></span>
+          <svg class="pilar-bg-draw pilar-pulse-2" viewBox="0 0 220 220" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <!-- Conexiones / Líneas -->
+            <line x1="40" y1="60" x2="90" y2="35" stroke="currentColor" stroke-width="1"/>
+            <line x1="110" y1="30" x2="160" y2="58" stroke="currentColor" stroke-width="1"/>
+            <line x1="110" y1="100" x2="160" y2="65" stroke="currentColor" stroke-width="1"/>
+            <line x1="110" y1="100" x2="160" y2="145" stroke="currentColor" stroke-width="1"/>
+            <line x1="160" y1="158" x2="110" y2="175" stroke="currentColor" stroke-width="1"/>
+            <!-- Nodos / Círculos -->
+            <circle cx="30" cy="60" r="10" stroke="currentColor" stroke-width="1"/>
+            <circle cx="100" cy="30" r="10" stroke="currentColor" stroke-width="1"/>
+            <circle cx="100" cy="100" r="10" stroke="currentColor" stroke-width="1"/>
+            <circle cx="170" cy="60" r="10" stroke="currentColor" stroke-width="1"/>
+            <circle cx="170" cy="150" r="10" stroke="currentColor" stroke-width="1"/>
+            <circle cx="100" cy="180" r="10" stroke="currentColor" stroke-width="1"/>
+          </svg>
+          <h3>Arquitectura de Procesos</h3>
+          <p>Centralizamos la entrega de tus servicios en un entorno impecable para eliminar el caos operativo y devolverte el control.</p>
+        </div>
+
+        <div class="pilar-card">
+          <span class="crosshair"></span>
+          <svg class="pilar-bg-draw pilar-neuro-3" viewBox="0 0 220 220" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <line x1="30" y1="40" x2="110" y2="65" stroke="currentColor" stroke-width="1"/>
+            <line x1="30" y1="40" x2="110" y2="115" stroke="currentColor" stroke-width="1"/>
+            <line x1="30" y1="40" x2="110" y2="165" stroke="currentColor" stroke-width="1"/>
+            <line x1="30" y1="90" x2="110" y2="65" stroke="currentColor" stroke-width="1"/>
+            <line x1="30" y1="90" x2="110" y2="115" stroke="currentColor" stroke-width="1"/>
+            <line x1="30" y1="90" x2="110" y2="165" stroke="currentColor" stroke-width="1"/>
+            <line x1="30" y1="140" x2="110" y2="65" stroke="currentColor" stroke-width="1"/>
+            <line x1="30" y1="140" x2="110" y2="115" stroke="currentColor" stroke-width="1"/>
+            <line x1="30" y1="140" x2="110" y2="165" stroke="currentColor" stroke-width="1"/>
+            <line x1="30" y1="190" x2="110" y2="65" stroke="currentColor" stroke-width="1"/>
+            <line x1="30" y1="190" x2="110" y2="115" stroke="currentColor" stroke-width="1"/>
+            <line x1="30" y1="190" x2="110" y2="165" stroke="currentColor" stroke-width="1"/>
+            <line x1="110" y1="65" x2="190" y2="90" stroke="currentColor" stroke-width="1"/>
+            <line x1="110" y1="65" x2="190" y2="140" stroke="currentColor" stroke-width="1"/>
+            <line x1="110" y1="115" x2="190" y2="90" stroke="currentColor" stroke-width="1"/>
+            <line x1="110" y1="115" x2="190" y2="140" stroke="currentColor" stroke-width="1"/>
+            <line x1="110" y1="165" x2="190" y2="90" stroke="currentColor" stroke-width="1"/>
+            <line x1="110" y1="165" x2="190" y2="140" stroke="currentColor" stroke-width="1"/>
+            <circle cx="30" cy="40" r="4" fill="currentColor"/>
+            <circle cx="30" cy="90" r="4" fill="currentColor"/>
+            <circle cx="30" cy="140" r="4" fill="currentColor"/>
+            <circle cx="30" cy="190" r="4" fill="currentColor"/>
+            <circle cx="110" cy="65" r="4" fill="currentColor"/>
+            <circle cx="110" cy="115" r="4" fill="currentColor"/>
+            <circle cx="110" cy="165" r="4" fill="currentColor"/>
+            <circle cx="190" cy="90" r="4" fill="currentColor"/>
+            <circle cx="190" cy="140" r="4" fill="currentColor"/>
+          </svg>
+          <h3>Agentes e IA Integrada</h3>
+          <p>Implementamos agentes inteligentes que califican prospectos y asisten 24/7, multiplicando la capacidad de tu equipo sin elevar costos fijos.</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== PORTALES Y CONTROL CENTER ===== -->
+  <section class="section" id="portales">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="eyebrow">Portales &amp; Control Center</span>
+        <h2>Un ecosistema que crece contigo.</h2>
+        <p>Tres niveles de infraestructura, cada uno diseñado para el momento operativo exacto de tu negocio.</p>
+      </div>
+      <div class="portales-grid">
+
+        <div class="portal-card">
+          <div class="portal-header">
+            <div class="portal-top-row">
+              <span class="portal-tier">INICIAL</span>
+            </div>
+            <h3 class="portal-title">Portal Básico</h3>
+            <p class="portal-desc">Organizar la casa y eliminar el desorden de correos y WhatsApp.</p>
+          </div>
+          <div class="portal-divider"></div>
+          <div class="portal-features">
+            <span class="portal-note" aria-hidden="true">&nbsp;</span>
+            <div class="portal-feature">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8.5L6.2 11.5L13 4.5" stroke="#00FF41" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              <p><b>Control Center</b> — Inicio</p>
+            </div>
+            <div class="portal-feature">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8.5L6.2 11.5L13 4.5" stroke="#00FF41" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              <p><b>Client Space</b> — Gestión</p>
+            </div>
+            <div class="portal-feature">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8.5L6.2 11.5L13 4.5" stroke="#00FF41" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              <p><b>Repository</b> — Archivos</p>
+            </div>
+            <div class="portal-feature">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8.5L6.2 11.5L13 4.5" stroke="#00FF41" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              <p><b>Agreements</b> — Contratos</p>
+            </div>
+          </div>
+          <div class="portal-cta">
+            <a href="#contacto" class="btn btn-ghost">Ver Portal Básico</a>
+          </div>
+        </div>
+
+        <div class="portal-card featured">
+          <div class="portal-header">
+            <div class="portal-top-row">
+              <span class="portal-tier">CRECIMIENTO</span>
+              <span class="portal-badge-popular">Popular</span>
+            </div>
+            <h3 class="portal-title">Portal Avanzado</h3>
+            <p class="portal-desc">Automatizar la entrega de servicios sin intermediarios.</p>
+          </div>
+          <div class="portal-divider"></div>
+          <div class="portal-features">
+            <span class="portal-note">Incluye todo lo de Portal Básico, más:</span>
+            <div class="portal-feature">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8.5L6.2 11.5L13 4.5" stroke="#00FF41" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              <p><b>Execution Plan</b> — Hojas de ruta</p>
+            </div>
+            <div class="portal-feature">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8.5L6.2 11.5L13 4.5" stroke="#00FF41" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              <p><b>Project Pulse</b> — Estados</p>
+            </div>
+            <div class="portal-feature">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8.5L6.2 11.5L13 4.5" stroke="#00FF41" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              <p><b>Workflow Engine</b> — Automatizaciones</p>
+            </div>
+          </div>
+          <div class="portal-cta">
+            <a href="#contacto" class="btn btn-primary">Ver Portal Avanzado</a>
+          </div>
+        </div>
+
+        <div class="portal-card">
+          <div class="portal-header">
+            <div class="portal-top-row">
+              <span class="portal-tier">AVANZADO</span>
+            </div>
+            <h3 class="portal-title">Portal Inteligente</h3>
+            <p class="portal-desc">Escalar el negocio con soporte automatizado 24/7.</p>
+          </div>
+          <div class="portal-divider"></div>
+          <div class="portal-features">
+            <span class="portal-note">Incluye todo lo de Portal Avanzado, más:</span>
+            <div class="portal-feature">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8.5L6.2 11.5L13 4.5" stroke="#00FF41" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              <p><b>Intelligence Hub</b> — Agente de IA</p>
+            </div>
+            <div class="portal-feature">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8.5L6.2 11.5L13 4.5" stroke="#00FF41" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              <p><b>Knowledge Vault</b> — Base de datos entrenada</p>
+            </div>
+          </div>
+          <div class="portal-cta">
+            <a href="#contacto" class="btn btn-ghost">Ver Portal Inteligente</a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== CTA FINAL ===== -->
+  <section class="cta-final" id="contacto">
+    <div class="grid-bg"></div>
+    <div class="cta-glow"></div>
+    <div class="wrap">
+      <span class="eyebrow">Xelva Studio</span>
+      <h2>¿Listo para elevar el estándar de tu operación?</h2>
+      <a href="#" class="btn btn-primary">Contactar a Xelva Studio</a>
+    </div>
+  </section>
+
+  <!-- ===== FOOTER ===== -->
+  <footer class="footer">
+    <div class="wrap">
+      <svg class="footer-logo" viewBox="0 0 800 176" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M352.48 64.04V96.44H276.96V118.13H366.2V150.68H237.5V11.17H366.24V44H278L277.99 64.04H352.48Z" fill="#A3A3A3"/>
+        <path d="M508.27 150.41H386.96V11.1H425.94V118.03L508.27 118.13V150.41Z" fill="#A3A3A3"/>
+        <path d="M563.785 102.794L610.21 11.14H653.027L580.08 150.4H547.5L474.324 11.33H516.64L563.785 102.794Z" fill="#A3A3A3"/>
+        <path d="M620.5 150.4L663.115 150.41L710.5 54.9999L757.69 150.41H799.591L731.17 11.14H689.581L620.5 150.4Z" fill="#A3A3A3"/>
+        <path d="M233.92 11.3C217.77 11.17 201.61 11.07 185.46 11.01L138.23 58.79L85.53 2.08L22.07 2L92.39 83.13L8 174.85L70.64 175.35L138.92 106.21L180.26 150.31L227 149.5L166.71 82.63L233.92 11.3Z" fill="#00FF41"/>
+      </svg>
+      <p>© Xelva Studio. Todos los derechos reservados.</p>
+    </div>
+  </footer>
+
+  <script>
+  /* =====================================================================
+     CONSOLA DE DIAGNÓSTICO — Loop Infinito de Tipeo (Typewriter)
+     ===================================================================== */
+  (function () {
+    var form        = document.getElementById('diagConsole');
+    var typeTextEl  = document.getElementById('diagTypeText');
+    var input       = document.getElementById('diagInput');
+    var submitBtn   = document.getElementById('diagSubmit');
+    var submitLabel = document.getElementById('diagSubmitLabel');
+
+    if (!form || !input) return;
+
+    var MESSAGES = [
+      'Describe tu proyecto para evaluar si encajamos...',
+      '¿Qué necesita tu equipo para pasar al siguiente nivel?',
+      'Escribe tu meta operativa y diseñemos la solución...'
+    ];
+
+    var msgIndex    = 0;
+    var charIndex   = 0;
+    var isDeleting  = false;
+    var typingTimer = null;
+
+    function typeLoop() {
+      if (form.classList.contains('is-active')) return;
+
+      var currentMsg = MESSAGES[msgIndex];
+
+      if (isDeleting) {
+        charIndex--;
+        typeTextEl.textContent = currentMsg.substring(0, charIndex);
+      } else {
+        charIndex++;
+        typeTextEl.textContent = currentMsg.substring(0, charIndex);
+      }
+
+      var typeSpeed = isDeleting ? 25 : 45;
+
+      if (!isDeleting && charIndex === currentMsg.length) {
+        typeSpeed = 2800; // Pausa con la frase completa para lectura
+        isDeleting = true;
+      } else if (isDeleting && charIndex === 0) {
+        isDeleting = false;
+        msgIndex = (msgIndex + 1) % MESSAGES.length;
+        typeSpeed = 400; // Pausa antes de empezar la siguiente
+      }
+
+      typingTimer = setTimeout(typeLoop, typeSpeed);
+    }
+
+    // Inicio de la animación
+    typingTimer = setTimeout(typeLoop, 500);
+
+    function activateConsole() {
+      if (form.classList.contains('is-active')) return;
+      form.classList.add('is-active');
+      clearTimeout(typingTimer);
+    }
+
+    // Recalcula la altura del textarea según su contenido (auto-expand)
+    function autoResizeInput() {
+      input.style.height = 'auto';
+      input.style.height = Math.min(input.scrollHeight, 120) + 'px';
+    }
+
+    function resetConsoleLoop() {
+      clearTimeout(typingTimer);
+      typeTextEl.textContent = MESSAGES[msgIndex];
+      form.classList.remove('is-active');
+      input.style.height = '22px'; // Vuelve a 1 línea
+      typingTimer = setTimeout(typeLoop, 2000);
+    }
+
+    input.addEventListener('focus', activateConsole);
+    input.addEventListener('input', function () {
+      activateConsole();
+      autoResizeInput();
+    });
+
+    input.addEventListener('blur', function () {
+      if (input.value.trim() === '') {
+        resetConsoleLoop();
+      }
+    });
+
+    form.addEventListener('click', function () {
+      if (!input.disabled) input.focus();
+    });
+
+    /* Manejo de Submit */
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      if (submitBtn.disabled) return;
+
+      var value = input.value.trim();
+      if (!value) {
+        form.classList.add('is-shake');
+        setTimeout(function () { form.classList.remove('is-shake'); }, 400);
+        input.focus();
+        return;
+      }
+
+      input.value = '';
+      input.disabled = true;
+      submitBtn.disabled = true;
+      submitBtn.classList.add('is-success');
+      submitLabel.textContent = '✓ Enviado';
+
+      setTimeout(function () {
+        submitBtn.classList.remove('is-success');
+        submitLabel.textContent = 'EJECUTAR';
+        submitBtn.disabled = false;
+        input.disabled = false;
+        resetConsoleLoop();
+      }, 2000);
+    });
+  })();
+
+  /* =====================================================================
+     SMART HIDE HEADER — oculta el header al bajar, lo muestra al subir
+     ===================================================================== */
+  (function () {
+    var header = document.querySelector('.header');
+    if (!header) return;
+
+    var HIDE_THRESHOLD = 80; // px mínimos de scroll antes de poder ocultarse
+    var TOP_OFFSET      = 20; // por debajo de esto, el header siempre se muestra
+
+    var lastScroll = window.scrollY || window.pageYOffset;
+    var ticking    = false;
+
+    function onScroll() {
+      var currentScroll = window.scrollY || window.pageYOffset;
+
+      // Cerca del top: el header siempre visible
+      if (currentScroll < TOP_OFFSET) {
+        header.classList.remove('header--hidden');
+      } else if (currentScroll > lastScroll && currentScroll > HIDE_THRESHOLD) {
+        // Scroll hacia abajo, superado el umbral: ocultar
+        header.classList.add('header--hidden');
+      } else if (currentScroll < lastScroll) {
+        // Scroll hacia arriba: mostrar
+        header.classList.remove('header--hidden');
+      }
+
+      lastScroll = currentScroll;
+      ticking = false;
+    }
+
+    // Throttling con requestAnimationFrame para no sobrecargar el hilo principal
+    window.addEventListener('scroll', function () {
+      if (!ticking) {
+        window.requestAnimationFrame(onScroll);
+        ticking = true;
+      }
+    }, { passive: true });
+  })();
+
+  /* =====================================================================
+     GLOW TRACING — sigue al cursor dentro de .pilar-card y .portal-card
+     Actualiza --mouse-x / --mouse-y en tiempo real, throttleado con rAF
+     ===================================================================== */
+  (function () {
+    var glowCards = document.querySelectorAll('.pilar-card, .portal-card');
+    if (!glowCards.length) return;
+
+    glowCards.forEach(function (card) {
+      var pendingX = 0;
+      var pendingY = 0;
+      var ticking  = false;
+
+      function applyGlow() {
+        card.style.setProperty('--mouse-x', pendingX + 'px');
+        card.style.setProperty('--mouse-y', pendingY + 'px');
+        ticking = false;
+      }
+
+      card.addEventListener('mousemove', function (e) {
+        // Optimización: recalculamos el rect en cada mousemove (en vez de
+        // cachearlo en mouseenter) para evitar desfases si la página
+        // hizo scroll mientras el cursor seguía dentro de la tarjeta.
+        var currentRect = card.getBoundingClientRect();
+        pendingX = e.clientX - currentRect.left;
+        pendingY = e.clientY - currentRect.top;
+        if (!ticking) {
+          window.requestAnimationFrame(applyGlow);
+          ticking = true;
+        }
+      }, { passive: true });
+
+      card.addEventListener('mouseleave', function (e) {
+        // Congelamos la posición exacta de salida en --mouse-x/--mouse-y
+        // (en vez de removerlas) para que el glow se desvanezca ahí mismo,
+        // sin saltar hacia el centro mientras corre la transición de opacity.
+        var exitRect = card.getBoundingClientRect();
+        var exitX = e.clientX - exitRect.left;
+        var exitY = e.clientY - exitRect.top;
+        card.style.setProperty('--mouse-x', exitX + 'px');
+        card.style.setProperty('--mouse-y', exitY + 'px');
+      });
+    });
+  })();
+
+  /* =====================================================================
+     MENÚ MÓVIL — abre / cierra el panel de navegación táctil
+     ===================================================================== */
+  (function () {
+    var toggle = document.getElementById('menuToggle');
+    var panel  = document.getElementById('mobileNav');
+    if (!toggle || !panel) return;
+
+    function openMenu() {
+      panel.classList.add('is-open');
+      panel.setAttribute('aria-hidden', 'false');
+      toggle.setAttribute('aria-expanded', 'true');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeMenu() {
+      panel.classList.remove('is-open');
+      panel.setAttribute('aria-hidden', 'true');
+      toggle.setAttribute('aria-expanded', 'false');
+      document.body.style.overflow = '';
+    }
+
+    toggle.addEventListener('click', function (e) {
+      // Cuando JS está activo, controlamos la apertura por clase para una
+      // experiencia más prolija (sin tocar la URL). Si JS no llegara a
+      // ejecutarse, el navegador simplemente sigue el href="#mobileNav"
+      // y el estado :target en CSS abre el panel igual.
+      e.preventDefault();
+      if (panel.classList.contains('is-open')) {
+        closeMenu();
+      } else {
+        openMenu();
+      }
+    });
+
+    panel.querySelectorAll('a').forEach(function (link) {
+      link.addEventListener('click', closeMenu);
+    });
+
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && panel.classList.contains('is-open')) {
+        closeMenu();
+      }
+    });
+
+    // Si el usuario agranda la ventana hasta escritorio, cierra el panel
+    window.addEventListener('resize', function () {
+      if (window.innerWidth > 900 && panel.classList.contains('is-open')) {
+        closeMenu();
+      }
+    });
+  })();
+  </script>
+
+</body>
+</html>
