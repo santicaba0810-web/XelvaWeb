@@ -4,12 +4,15 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Xelva Studio — Infraestructura Digital de Alto Estatus</title>
-<meta name="description" content="Diseñamos sistemas web, portales de clientes y automatizaciones con IA para escalar operativamente sin fricción.">
+<meta name="description" content="Diseño y desarrollo de páginas web premium para negocios locales, con la opción de sumar un asistente de IA integrado.">
 <meta property="og:title" content="Xelva Studio — Infraestructura Digital de Alto Estatus">
-<meta property="og:description" content="Diseñamos sistemas web, portales de clientes y automatizaciones con IA para escalar operativamente sin fricción.">
+<meta property="og:description" content="Diseño y desarrollo de páginas web premium para negocios locales, con la opción de sumar un asistente de IA integrado.">
 <meta property="og:type" content="website">
 <!-- Optimización SEO/Meta: og:image + theme-color -->
-<meta property="og:image" content="[URL_IMAGEN]">
+<meta property="og:image" content="E:\.SANTIAGO\Xelva Studio\Branding\VISUAL\Logo\Banner\Gemini_Generated_Image_8duh7v8duh7v8duh.jfif">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1376">
+<meta property="og:image:height" content="768">
 <meta name="theme-color" content="#050505">
 <link rel="icon" href="/favicon.ico" type="image/x-icon">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -388,19 +391,25 @@
     gap:8px;
     height:44px;
     padding:0 18px;
-    border:1px solid transparent;
-    border-radius:9px;
-    background:var(--diag-accent);
+    border:1px solid rgba(124,255,178,0.7);
+    border-radius:8px;
+    background:linear-gradient(135deg, var(--diag-accent) 0%, #7CFFB2 100%);
     color:#050505;
+    box-shadow:0 0 0 1px rgba(0,255,65,0.14), 0 20px 58px rgba(0,255,65,0.28);
     font-family:var(--font-mono);
     font-weight:600;
     font-size:13px;
     letter-spacing:0.02em;
     white-space:nowrap;
     cursor:pointer;
-    transition:background 0.2s ease, transform 0.15s ease, color 0.2s ease, border-color 0.2s ease;
+    transition:background 0.2s ease, transform 0.15s ease, color 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
   }
-  .diag-submit:hover:not(:disabled){background:#2BFF5C;transform:translateY(-1px);}
+  .diag-submit:hover:not(:disabled){
+    background:linear-gradient(135deg, #7CFFB2 0%, var(--diag-accent) 100%);
+    border-color:var(--diag-accent);
+    box-shadow:0 0 0 1px rgba(0,255,65,0.22), 0 24px 72px rgba(0,255,65,0.36);
+    transform:translateY(-2px);
+  }
   .diag-submit:active:not(:disabled){transform:translateY(0);}
   .diag-submit:disabled{cursor:not-allowed;}
   .diag-submit.is-loading{
@@ -849,6 +858,21 @@
   .portal-cta .btn{
     width:100%;
   }
+  .portal-card.featured .portal-cta .btn-primary{
+    background:linear-gradient(135deg, var(--neon) 0%, #7CFFB2 100%);
+    color:#050505;
+    border-color:rgba(124,255,178,0.7);
+    border-radius:8px;
+    clip-path:none;
+    box-shadow:0 0 0 1px rgba(0,255,65,0.14), 0 20px 58px rgba(0,255,65,0.28);
+    transition:background 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+  }
+  .portal-card.featured .portal-cta .btn-primary:hover{
+    background:linear-gradient(135deg, #7CFFB2 0%, var(--neon) 100%);
+    border-color:var(--neon);
+    box-shadow:0 0 0 1px rgba(0,255,65,0.22), 0 24px 72px rgba(0,255,65,0.36);
+    transform:translateY(-2px);
+  }
 
   /* ===== CTA FINAL ===== */
   .cta-final{
@@ -888,6 +912,20 @@
   .cta-final .btn-primary{
     padding:16px 34px;
     font-size:16px;
+    background:linear-gradient(135deg, var(--neon) 0%, #7CFFB2 100%);
+    color:#050505;
+    border-color:rgba(124,255,178,0.7);
+    border-radius:8px;
+    clip-path:none;
+    box-shadow:0 0 0 1px rgba(0,255,65,0.14), 0 20px 58px rgba(0,255,65,0.28);
+    backdrop-filter:blur(14px);
+    transition:background 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+  }
+  .cta-final .btn-primary:hover{
+    background:linear-gradient(135deg, #7CFFB2 0%, var(--neon) 100%);
+    border-color:var(--neon);
+    box-shadow:0 0 0 1px rgba(0,255,65,0.22), 0 24px 72px rgba(0,255,65,0.36);
+    transform:translateY(-2px);
   }
 
   /* ===== FOOTER ===== */
@@ -1167,7 +1205,7 @@
     </svg>
     <div class="wrap">
       <h1>Infraestructura Digital de <span class="accent">Alto Estatus.</span></h1>
-      <p class="lead">Diseñamos tu identidad comercial y estructuramos tu operación interna en un único ecosistema Premium. El factor de confianza decisivo para cerrar clientes de alto valor.</p>
+      <p class="lead">Diseñamos una web a la altura de tu negocio: la primera impresión que construye la confianza necesaria para que un cliente te elija antes de conocerte en persona.</p>
       <form class="diag-console" id="diagConsole" novalidate>
         <div class="diag-field">
           <div class="diag-type-layer" aria-hidden="true">
@@ -1292,8 +1330,7 @@
     <div class="grid-bg"></div>
     <div class="wrap">
       <div class="section-head">
-        <span class="eyebrow">Pilares de Servicio</span>
-        <h2>Tres disciplinas, un solo sistema.</h2>
+        <h2><span style="color:var(--neon)">Tres disciplinas,</span> un solo sistema<span style="color:var(--neon)">.</span></h2>
         <p>Diseño, procesos e inteligencia artificial operando como una sola infraestructura, no como servicios sueltos.</p>
       </div>
       <svg width="0" height="0" style="position:absolute;overflow:hidden" aria-hidden="true" focusable="false">
@@ -1322,7 +1359,7 @@
             <rect class="scan-beam" x="20" y="20" width="180" height="3" fill="currentColor"/>
           </svg>
           <h3>Diseño Web Premium</h3>
-          <p>Estética de vanguardia que asegura consideración visual y proyecta autoridad de mercado ante competidores.</p>
+          <p>Estética a medida que hace que tu negocio se vea con más autoridad que cualquier otro en tu rubro.</p>
         </div>
 
         <div class="pilar-card">
@@ -1342,8 +1379,8 @@
             <circle cx="170" cy="150" r="10" stroke="currentColor" stroke-width="1"/>
             <circle cx="100" cy="180" r="10" stroke="currentColor" stroke-width="1"/>
           </svg>
-          <h3>Arquitectura de Procesos</h3>
-          <p>Centralizamos la entrega de tus servicios en un entorno impecable para eliminar el caos operativo y devolverte el control.</p>
+          <h3>Arquitectura Web</h3>
+          <p>Una estructura clara y ágil, diseñada para guiar a cada visitante hacia el contacto sin fricciones.</p>
         </div>
 
         <div class="pilar-card">
@@ -1378,7 +1415,7 @@
             <circle cx="190" cy="140" r="4" fill="currentColor"/>
           </svg>
           <h3>Agentes e IA Integrada</h3>
-          <p>Implementamos agentes inteligentes que califican prospectos y asisten 24/7, multiplicando la capacidad de tu equipo sin elevar costos fijos.</p>
+          <p>Un asistente inteligente que responde las consultas de cada visitante las 24 horas, incluso cuando vos no podés estar disponible.</p>
         </div>
 
       </div>
@@ -1389,9 +1426,8 @@
   <section class="section" id="portales">
     <div class="wrap">
       <div class="section-head">
-        <span class="eyebrow">Portales &amp; Control Center</span>
-        <h2>Un ecosistema que crece contigo.</h2>
-        <p>Tres niveles de infraestructura, cada uno diseñado para el momento operativo exacto de tu negocio.</p>
+        <h2>Elegí el <span style="color:var(--neon)">nivel de presencia digital</span> que tu negocio necesita<span style="color:var(--neon)">.</span></h2>
+        <p>Tres niveles pensados para acompañar el momento exacto de tu negocio.</p>
       </div>
       <div class="portales-grid">
 
@@ -1400,31 +1436,31 @@
             <div class="portal-top-row">
               <span class="portal-tier">INICIAL</span>
             </div>
-            <h3 class="portal-title">Portal Básico</h3>
-            <p class="portal-desc">Organizar la casa y eliminar el desorden de correos y WhatsApp.</p>
+            <h3 class="portal-title">Consolidación Digital</h3>
+            <p class="portal-desc">Una presencia digital profesional, a la altura de la calidad del servicio que ofrecés.</p>
           </div>
           <div class="portal-divider"></div>
           <div class="portal-features">
             <span class="portal-note" aria-hidden="true">&nbsp;</span>
             <div class="portal-feature">
               <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8.5L6.2 11.5L13 4.5" stroke="#00FF41" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
-              <p><b>Control Center</b> — Inicio</p>
+              <p><b>Diseño a medida</b></p>
             </div>
             <div class="portal-feature">
               <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8.5L6.2 11.5L13 4.5" stroke="#00FF41" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
-              <p><b>Client Space</b> — Gestión</p>
+              <p><b>Página con lo esencial: quiénes sos, servicios, contacto</b></p>
             </div>
             <div class="portal-feature">
               <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8.5L6.2 11.5L13 4.5" stroke="#00FF41" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
-              <p><b>Repository</b> — Archivos</p>
+              <p><b>100% adaptada a celular</b></p>
             </div>
             <div class="portal-feature">
               <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8.5L6.2 11.5L13 4.5" stroke="#00FF41" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
-              <p><b>Agreements</b> — Contratos</p>
+              <p><b>Botón directo a WhatsApp o formulario de contacto</b></p>
             </div>
           </div>
           <div class="portal-cta">
-            <a href="#contacto" class="btn btn-ghost">Ver Portal Básico</a>
+            <a href="#contacto" class="btn btn-ghost">Ver Consolidación Digital</a>
           </div>
         </div>
 
@@ -1434,27 +1470,31 @@
               <span class="portal-tier">CRECIMIENTO</span>
               <span class="portal-badge-popular">Popular</span>
             </div>
-            <h3 class="portal-title">Portal Avanzado</h3>
-            <p class="portal-desc">Automatizar la entrega de servicios sin intermediarios.</p>
+            <h3 class="portal-title">Impulso Estratégico</h3>
+            <p class="portal-desc">Automatizá las tareas manuales y empezá a captar clientes de forma autónoma.</p>
           </div>
           <div class="portal-divider"></div>
           <div class="portal-features">
-            <span class="portal-note">Incluye todo lo de Portal Básico, más:</span>
+            <span class="portal-note">Incluye todo lo de Consolidación Digital, más:</span>
             <div class="portal-feature">
               <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8.5L6.2 11.5L13 4.5" stroke="#00FF41" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
-              <p><b>Execution Plan</b> — Hojas de ruta</p>
+              <p><b>Reservas/turnos online</b></p>
             </div>
             <div class="portal-feature">
               <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8.5L6.2 11.5L13 4.5" stroke="#00FF41" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
-              <p><b>Project Pulse</b> — Estados</p>
+              <p><b>Galería de trabajos y testimonios</b></p>
             </div>
             <div class="portal-feature">
               <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8.5L6.2 11.5L13 4.5" stroke="#00FF41" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
-              <p><b>Workflow Engine</b> — Automatizaciones</p>
+              <p><b>Optimización básica para aparecer en Google en tu zona</b></p>
+            </div>
+            <div class="portal-feature">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8.5L6.2 11.5L13 4.5" stroke="#00FF41" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              <p><b>Integración con tu Instagram</b></p>
             </div>
           </div>
           <div class="portal-cta">
-            <a href="#contacto" class="btn btn-primary">Ver Portal Avanzado</a>
+            <a href="#contacto" class="btn btn-primary">Ver Impulso Estratégico</a>
           </div>
         </div>
 
@@ -1463,23 +1503,23 @@
             <div class="portal-top-row">
               <span class="portal-tier">AVANZADO</span>
             </div>
-            <h3 class="portal-title">Portal Inteligente</h3>
-            <p class="portal-desc">Escalar el negocio con soporte automatizado 24/7.</p>
+            <h3 class="portal-title">Expansión Inteligente</h3>
+            <p class="portal-desc">Escalá la atención a tus clientes sin sumar carga operativa adicional.</p>
           </div>
           <div class="portal-divider"></div>
           <div class="portal-features">
-            <span class="portal-note">Incluye todo lo de Portal Avanzado, más:</span>
+            <span class="portal-note">Incluye todo lo de Impulso Estratégico, más:</span>
             <div class="portal-feature">
               <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8.5L6.2 11.5L13 4.5" stroke="#00FF41" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
-              <p><b>Intelligence Hub</b> — Agente de IA</p>
+              <p><b>Agente de IA</b> — responde consultas 24/7 en tu web</p>
             </div>
             <div class="portal-feature">
               <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8.5L6.2 11.5L13 4.5" stroke="#00FF41" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
-              <p><b>Knowledge Vault</b> — Base de datos entrenada</p>
+              <p><b>Portal de cliente</b></p>
             </div>
           </div>
           <div class="portal-cta">
-            <a href="#contacto" class="btn btn-ghost">Ver Portal Inteligente</a>
+            <a href="#contacto" class="btn btn-ghost">Ver Expansión Inteligente</a>
           </div>
         </div>
 
@@ -1493,7 +1533,7 @@
     <div class="cta-glow"></div>
     <div class="wrap">
       <span class="eyebrow">Xelva Studio</span>
-      <h2>¿Listo para elevar el estándar de tu operación?</h2>
+      <h2>¿Listo para proyectar una imagen premium?</h2>
       <a href="#" class="btn btn-primary">Contactar a Xelva Studio</a>
     </div>
   </section>
