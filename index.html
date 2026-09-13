@@ -1370,9 +1370,48 @@
     padding:18px 4px 4px;
   }
   .contact-success[hidden]{display:none;}
-  .xel-mascot{width:104px;height:104px;margin-bottom:20px;animation:xelBounce 2.6s ease-in-out infinite;}
-  .xel-eye{transform-origin:center;animation:xelBlink 4.2s ease-in-out infinite;}
-  .xel-antenna-ping{animation:xelPing 1.8s ease-out infinite;}
+  .xel-mascot{
+    position:relative;
+    width:104px;
+    height:104px;
+    margin-bottom:20px;
+    overflow:hidden;
+  }
+  .xel-mascot svg{width:100%;height:100%;display:block;}
+  .xel-floor{
+    /* Pieza fija de piso/repisa: nunca se anima ni se traslada. */
+  }
+  .xel-rig-rise{
+    transform:translateY(190px);
+    animation:xelRigRise 2.4s cubic-bezier(.32,.1,.28,1) forwards;
+  }
+  .xel-antenna{
+    transform-origin:108px 20px;
+    transform:rotate(8deg);
+    animation:xelAntennaWobble 2.4s ease-out forwards;
+  }
+  .xel-eye-r-open{
+    animation:xelEyeROpen 2.4s ease forwards;
+  }
+  .xel-eye-r-closed{
+    opacity:0;
+    animation:xelEyeRClosed 2.4s ease forwards;
+  }
+  .xel-arm-rest{
+    transform-origin:158px 126px;
+    transform:rotate(-18deg);
+    animation:xelArmRest 2.4s ease-in-out forwards;
+  }
+  .xel-arm-raised{
+    transform-origin:171px 127px;
+    opacity:0;
+    transform:rotate(-12deg);
+    animation:xelArmRaised 2.4s ease-in-out forwards;
+  }
+  .xel-sparkles{
+    opacity:0;
+    animation:xelSparkleFade 2.4s ease forwards;
+  }
   .contact-success-eyebrow{
     font-family:var(--font-mono);
     font-size:12px;
@@ -1416,26 +1455,93 @@
     animation:xelLogLine 0.35s ease forwards;
   }
   .contact-success-log p:nth-child(1){animation-delay:0.15s;}
-  .contact-success-log p:nth-child(2){animation-delay:0.55s;}
-  .contact-success-log p:nth-child(3){animation-delay:0.95s;}
+  .contact-success-log p:nth-child(2){animation-delay:0.35s;}
+  .contact-success-log p:nth-child(3){animation-delay:0.55s;}
   @keyframes xelLogLine{
     from{opacity:0;transform:translateX(-6px);}
     to{opacity:1;transform:translateX(0);}
   }
-  @keyframes xelBounce{
-    0%,100%{transform:translateY(0);}
-    50%{transform:translateY(-9px);}
+  @keyframes xelRigRise{
+    0%{transform:translateY(190px);}
+    8%{transform:translateY(190px);}
+    34%{transform:translateY(6px);}
+    40%{transform:translateY(-14px);}
+    47%{transform:translateY(6px);}
+    54%{transform:translateY(-6px);}
+    60%{transform:translateY(2px);}
+    64%{transform:translateY(0);}
+    100%{transform:translateY(0);}
   }
-  @keyframes xelBlink{
-    0%,92%,100%{transform:scaleY(1);}
-    96%{transform:scaleY(0.12);}
+  @keyframes xelAntennaWobble{
+    0%{transform:rotate(8deg);}
+    34%{transform:rotate(8deg);}
+    40%{transform:rotate(-4deg);}
+    47%{transform:rotate(14deg);}
+    54%{transform:rotate(2deg);}
+    60%{transform:rotate(10deg);}
+    64%{transform:rotate(8deg);}
+    100%{transform:rotate(8deg);}
   }
-  @keyframes xelPing{
-    0%{transform:scale(0.6);opacity:0.9;}
-    100%{transform:scale(2.4);opacity:0;}
+  @keyframes xelEyeROpen{
+    0%{opacity:1;}
+    64%{opacity:1;}
+    70%{opacity:0;}
+    92%{opacity:0;}
+    97%{opacity:1;}
+    100%{opacity:1;}
+  }
+  @keyframes xelEyeRClosed{
+    0%{opacity:0;}
+    64%{opacity:0;}
+    70%{opacity:1;}
+    92%{opacity:1;}
+    97%{opacity:0;}
+    100%{opacity:0;}
+  }
+  @keyframes xelArmRest{
+    0%{opacity:1;transform:rotate(-18deg);}
+    64%{opacity:1;transform:rotate(-18deg);}
+    70%{opacity:0;transform:rotate(-32deg);}
+    92%{opacity:0;transform:rotate(-32deg);}
+    97%{opacity:1;transform:rotate(-18deg);}
+    100%{opacity:1;transform:rotate(-18deg);}
+  }
+  @keyframes xelArmRaised{
+    0%{opacity:0;transform:rotate(-12deg);}
+    64%{opacity:0;transform:rotate(-12deg);}
+    70%{opacity:1;transform:rotate(-12deg);}
+    76%{opacity:1;transform:rotate(6deg);}
+    82%{opacity:1;transform:rotate(-22deg);}
+    88%{opacity:1;transform:rotate(6deg);}
+    92%{opacity:1;transform:rotate(-12deg);}
+    97%{opacity:0;transform:rotate(-12deg);}
+    100%{opacity:0;transform:rotate(-12deg);}
+  }
+  @keyframes xelSparkleFade{
+    0%{opacity:0;}
+    68%{opacity:0;}
+    74%{opacity:1;}
+    88%{opacity:1;}
+    94%{opacity:0;}
+    100%{opacity:0;}
   }
   @media (prefers-reduced-motion:reduce){
-    .xel-mascot,.xel-eye,.xel-antenna-ping{animation:none;}
+    .xel-mascot .xel-rig-rise,
+    .xel-mascot .xel-antenna,
+    .xel-mascot .xel-eye-r-open,
+    .xel-mascot .xel-eye-r-closed,
+    .xel-mascot .xel-arm-rest,
+    .xel-mascot .xel-arm-raised,
+    .xel-mascot .xel-sparkles{
+      animation:none !important;
+    }
+    .xel-mascot .xel-rig-rise{transform:translateY(0);}
+    .xel-mascot .xel-antenna{transform:rotate(8deg);}
+    .xel-mascot .xel-eye-r-open{opacity:1;}
+    .xel-mascot .xel-eye-r-closed{opacity:0;}
+    .xel-mascot .xel-arm-rest{opacity:1;transform:rotate(-18deg);}
+    .xel-mascot .xel-arm-raised{opacity:0;}
+    .xel-mascot .xel-sparkles{opacity:0;}
     .contact-success-log p{animation:none;opacity:1;}
   }
 
@@ -1791,7 +1897,7 @@
             </div>
           </div>
           <div class="portal-cta">
-            <a href="#contacto" class="btn btn-ghost">Ver Consolidación Digital</a>
+            <a href="#contacto" class="btn btn-ghost" id="btnNivelInicial">Seleccionar Consolidación Digital</a>
           </div>
         </div>
 
@@ -1825,7 +1931,7 @@
             </div>
           </div>
           <div class="portal-cta">
-            <a href="#contacto" class="btn btn-primary">Ver Impulso Estratégico</a>
+            <a href="#contacto" class="btn btn-primary" id="btnNivelCrecimiento">Seleccionar Impulso Estratégico</a>
           </div>
         </div>
 
@@ -1850,7 +1956,7 @@
             </div>
           </div>
           <div class="portal-cta">
-            <a href="#contacto" class="btn btn-ghost">Ver Expansión Inteligente</a>
+            <a href="#contacto" class="btn btn-ghost" id="btnNivelAvanzado">Seleccionar Expansión Inteligente</a>
           </div>
         </div>
 
@@ -1921,15 +2027,13 @@
           </div>
 
           <div class="c-field">
-            <label for="cServicio">Servicio que necesitás <span class="req">*</span></label>
+            <label for="cServicio">Tipo de servicio <span class="req">*</span></label>
             <select id="cServicio" name="servicio" required>
               <option value="" disabled selected hidden>Elegí una opción...</option>
-              <option>Diseño Web Premium</option>
-              <option>Arquitectura Web</option>
-              <option>Agentes e IA Integrada / Automatización</option>
               <option>Nivel Inicial — Consolidación Digital</option>
               <option>Nivel Crecimiento — Impulso Estratégico</option>
               <option>Nivel Avanzado — Expansión Inteligente</option>
+              <option>Personalizado</option>
               <option>Todavía no lo tengo definido</option>
             </select>
           </div>
@@ -1940,40 +2044,88 @@
           </div>
 
           <button type="submit" class="btn btn-primary contact-submit" id="contactSubmitBtn">
-            <span id="contactSubmitLabel">Enviar solicitud</span>
+            <span id="contactSubmitLabel">Enviar consulta</span>
           </button>
         </form>
       </div>
 
       <!-- ESTADO 2: MENSAJE DE ÉXITO -->
       <div class="contact-success" id="contactSuccessPanel" hidden>
-        <svg class="xel-mascot" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-          <circle class="xel-antenna-ping" cx="60" cy="22" r="4" fill="#00FF41"/>
-          <line x1="60" y1="26" x2="60" y2="38" stroke="#2BB15C" stroke-width="3" stroke-linecap="round"/>
-          <circle cx="60" cy="22" r="4" fill="#00FF41"/>
-          <ellipse cx="60" cy="72" rx="42" ry="36" fill="#00FF41"/>
-          <ellipse cx="60" cy="72" rx="42" ry="36" fill="url(#xelShade)" fill-opacity="0.25"/>
-          <g class="xel-eye">
-            <circle cx="45" cy="68" r="7" fill="#050505"/>
-            <circle cx="47.5" cy="65.5" r="2.2" fill="#FFFFFF"/>
-          </g>
-          <g class="xel-eye">
-            <circle cx="75" cy="68" r="7" fill="#050505"/>
-            <circle cx="77.5" cy="65.5" r="2.2" fill="#FFFFFF"/>
-          </g>
-          <path d="M48 86C52 91 68 91 72 86" stroke="#050505" stroke-width="3" stroke-linecap="round" fill="none"/>
-          <ellipse cx="33" cy="80" rx="6" ry="4" fill="#7CFFB2" fill-opacity="0.55"/>
-          <ellipse cx="87" cy="80" rx="6" ry="4" fill="#7CFFB2" fill-opacity="0.55"/>
-          <defs>
-            <linearGradient id="xelShade" x1="60" y1="36" x2="60" y2="108" gradientUnits="userSpaceOnUse">
-              <stop stop-color="#FFFFFF" stop-opacity="0.5"/>
-              <stop offset="1" stop-color="#050505" stop-opacity="0.35"/>
-            </linearGradient>
-          </defs>
-        </svg>
+        <div class="xel-mascot" aria-hidden="true">
+          <svg viewBox="0 0 220 220" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <g clip-path="url(#clip0_xelrig)">
+              <ellipse opacity="0.12" cx="114" cy="115" rx="66" ry="73" fill="#00FF41"/>
+
+              <g class="xel-rig-rise">
+                <g class="xel-antenna">
+                  <rect x="108" y="20" width="8" height="40" rx="4" fill="#2BB15C"/>
+                  <circle cx="110" cy="22" r="12" fill="#00FF41"/>
+                </g>
+
+                <g filter="url(#filter0_d_xelrig)">
+                  <ellipse cx="113" cy="124" rx="71" ry="76" fill="#2BB15C"/>
+                </g>
+                <ellipse opacity="0.3" cx="113" cy="152" rx="43" ry="32" fill="#91E6AE"/>
+
+                <g class="xel-legs">
+                  <ellipse cx="84.2355" cy="204.233" rx="24" ry="11" transform="rotate(8 84.2355 204.233)" fill="#2BB15C"/>
+                  <ellipse cx="145.297" cy="197.553" rx="24" ry="11" transform="rotate(-8 145.297 197.553)" fill="#2BB15C"/>
+                </g>
+
+                <rect x="72" y="75" width="26" height="34" rx="13" fill="white"/>
+                <ellipse cx="85" cy="92" rx="5" ry="7" fill="#050505"/>
+
+                <g class="xel-eye-r-open">
+                  <rect x="126" y="75" width="26" height="34" rx="13" fill="white"/>
+                  <ellipse cx="139" cy="92" rx="5" ry="7" fill="#050505"/>
+                </g>
+                <rect class="xel-eye-r-closed" x="126" y="83" width="22" height="4" rx="2" transform="rotate(8 126 83)" fill="#050505"/>
+
+                <ellipse opacity="0.65" cx="71" cy="119" rx="9" ry="5" fill="#00FF41"/>
+                <ellipse opacity="0.65" cx="155" cy="119" rx="9" ry="5" fill="#00FF41"/>
+
+                <rect x="103" y="112" width="22" height="6" rx="3" transform="rotate(-4 103 112)" fill="#050505"/>
+
+                <rect x="30" y="126" width="44" height="14" rx="7" transform="rotate(18 30 126)" fill="#2BB15C"/>
+
+                <g class="xel-arm-rest">
+                  <rect x="158" y="126" width="44" height="14" rx="7" fill="#2BB15C"/>
+                </g>
+                <g class="xel-arm-raised">
+                  <rect x="164" y="42" width="14" height="88" rx="7" fill="#2BB15C"/>
+                </g>
+
+                <g class="xel-sparkles">
+                  <circle cx="194" cy="48" r="4" fill="#00FF41"/>
+                  <circle opacity="0.65" cx="200.5" cy="70.5" r="2.5" fill="#00FF41"/>
+                </g>
+              </g>
+
+              <g class="xel-floor">
+                <path d="M0 210C0 200.059 8.05887 192 18 192H202C211.941 192 220 200.059 220 210V240H0V210Z" fill="#222222"/>
+              </g>
+            </g>
+            <defs>
+              <filter id="filter0_d_xelrig" x="10" y="24" width="206" height="216" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+                <feFlood flood-opacity="0" result="BackgroundImageFix"/>
+                <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+                <feMorphology radius="2" operator="dilate" in="SourceAlpha" result="effect1_dropShadow_xelrig"/>
+                <feOffset dy="8"/>
+                <feGaussianBlur stdDeviation="15"/>
+                <feComposite in2="hardAlpha" operator="out"/>
+                <feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 1 0 0 0 0 0.254902 0 0 0 0.219608 0"/>
+                <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_xelrig"/>
+                <feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_xelrig" result="shape"/>
+              </filter>
+              <clipPath id="clip0_xelrig">
+                <rect width="220" height="220" fill="white"/>
+              </clipPath>
+            </defs>
+          </svg>
+        </div>
         <p class="contact-success-eyebrow">// mensaje_enviado</p>
         <h3>Gracias por contactarte con nuestro equipo</h3>
-        <p class="contact-success-msg">Nos pondremos en contacto lo antes posible.</p>
+        <p class="contact-success-msg">Te vamos a responder a tu mail en menos de 24 horas.</p>
         <div class="contact-success-log" aria-hidden="true">
           <p>&gt; solicitud_recibida.ok</p>
           <p>&gt; equipo_xelva.notificado</p>
@@ -2110,8 +2262,9 @@
   /* =====================================================================
      MODAL DE CONTACTO — única puerta de entrada al formulario real.
      Se expone como window.XelvaContactModal.open(...) para que sea
-     invocado exclusivamente desde los tres disparadores autorizados:
-     "Contactar a Xelva Studio", "Ejecutar" (con texto) y "Agendar Auditoría".
+     invocado exclusivamente desde los seis disparadores autorizados:
+     "Contactar a Xelva Studio", "Ejecutar" (consola de diagnóstico),
+     "Agendar Auditoría" y los tres botones "Seleccionar [Nivel]".
      ===================================================================== */
   (function () {
     var overlay      = document.getElementById('contactOverlay');
@@ -2132,6 +2285,22 @@
     var descripcionField  = document.getElementById('cDescripcion');
 
     var lastTrigger = null;
+
+    var DESCRIPCION_PLACEHOLDER_DEFAULT     = 'Contanos en pocas líneas qué necesitás...';
+    var DESCRIPCION_PLACEHOLDER_PERSONALIZADO = 'Contanos exactamente qué servicio necesitás y qué buscás lograr...';
+    var DESCRIPCION_PLACEHOLDER_INDEFINIDO   = 'Contanos brevemente tu situación y te ayudamos a definir la mejor opción...';
+
+    if (servicioField && descripcionField) {
+      servicioField.addEventListener('change', function () {
+        if (servicioField.value === 'Personalizado') {
+          descripcionField.placeholder = DESCRIPCION_PLACEHOLDER_PERSONALIZADO;
+        } else if (servicioField.value === 'Todavía no lo tengo definido') {
+          descripcionField.placeholder = DESCRIPCION_PLACEHOLDER_INDEFINIDO;
+        } else {
+          descripcionField.placeholder = DESCRIPCION_PLACEHOLDER_DEFAULT;
+        }
+      });
+    }
 
     function fieldWrapper(field) {
       return field.closest('.c-field');
@@ -2154,7 +2323,7 @@
         if (wrapper) wrapper.classList.remove('is-invalid');
       });
       submitBtn.disabled = false;
-      submitLabel.textContent = 'Enviar solicitud';
+      submitLabel.textContent = 'Enviar consulta';
       formPanel.hidden = false;
       successPanel.hidden = true;
     }
@@ -2166,6 +2335,9 @@
       resetFormState();
       if (options.descripcion) {
         descripcionField.value = options.descripcion;
+      }
+      if (options.servicio) {
+        servicioField.value = options.servicio;
       }
 
       overlay.classList.add('is-open');
@@ -2253,9 +2425,12 @@
         });
     });
 
-    // ----- Los tres únicos disparadores autorizados -----
+    // ----- Los seis únicos disparadores autorizados -----
     var btnContactar = document.getElementById('btnContactarXelva');
     var btnAgendar    = document.getElementById('btnAgendarAuditoria');
+    var btnNivelInicial     = document.getElementById('btnNivelInicial');
+    var btnNivelCrecimiento = document.getElementById('btnNivelCrecimiento');
+    var btnNivelAvanzado    = document.getElementById('btnNivelAvanzado');
 
     if (btnContactar) {
       btnContactar.addEventListener('click', function (e) {
@@ -2267,6 +2442,24 @@
       btnAgendar.addEventListener('click', function (e) {
         e.preventDefault();
         openModal({ trigger: btnAgendar });
+      });
+    }
+    if (btnNivelInicial) {
+      btnNivelInicial.addEventListener('click', function (e) {
+        e.preventDefault();
+        openModal({ servicio: 'Nivel Inicial — Consolidación Digital', trigger: btnNivelInicial });
+      });
+    }
+    if (btnNivelCrecimiento) {
+      btnNivelCrecimiento.addEventListener('click', function (e) {
+        e.preventDefault();
+        openModal({ servicio: 'Nivel Crecimiento — Impulso Estratégico', trigger: btnNivelCrecimiento });
+      });
+    }
+    if (btnNivelAvanzado) {
+      btnNivelAvanzado.addEventListener('click', function (e) {
+        e.preventDefault();
+        openModal({ servicio: 'Nivel Avanzado — Expansión Inteligente', trigger: btnNivelAvanzado });
       });
     }
   })();
